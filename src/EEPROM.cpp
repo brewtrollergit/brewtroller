@@ -445,7 +445,7 @@ void eepromSaveProgramThread(byte index, struct ProgramThread *thread) {
 //**********************************************************************************
 unsigned int getDelayMins() { return EEPROMreadInt(398); }
 void setDelayMins(unsigned int mins) {
-  if(mins != 0) EEPROMwriteInt(398, mins);
+  EEPROMwriteInt(398, mins);
 }
 
 //**********************************************************************************
