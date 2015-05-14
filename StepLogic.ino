@@ -242,6 +242,9 @@ void brewStepDelay(enum StepSignal signal, struct ProgramThread *thread) {
     case STEPSIGNAL_ADVANCE:
       clearTimer(TIMER_MASH);
       setAlarm(0);
+	  //Clear Delay mins EEPROM setting so it will not be used next no-delay start.
+	  if (getDelayMins()) 
+		  setDelayMins(0);
       if (signal == STEPSIGNAL_ADVANCE)
         brewStepPreheat(STEPSIGNAL_INIT, thread);
       break;
