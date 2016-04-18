@@ -18,9 +18,13 @@
 			{"optName":"OT_EX1_HERMS", "name": "EX1 HERMS"},
 			{"optName":"OT_EX1_RIMSDF", "name": "EX1 RIMS"},
 			{"optName":"OT_EX1_SINGLEVESSEL", "name": "EX1 Single Vessel"},
-			{"optName":"OT_EX1_STEAMPWM", "name": "EX1 Steam"}
-		],
-		"default": "DX1 HERMS"
+			{"optName":"OT_EX1_STEAMPWM", "name": "EX1 Steam"},
+                        {"optName":"BT_PHOENIX","name": "Phoenix HERMS"},
+                        {"optName":"BT_PHOENIX","name": "Phoenix RIMS"},
+                        {"optName":"BT_PHOENIX","name": "Phoenix Single Vessel"},
+                        {"optName":"BT_PHOENIX","name": "Phoenix Steam"}
+                ],
+		"default": "Phoenix HERMS"
 	},
 	{
 		"type": "switch",
