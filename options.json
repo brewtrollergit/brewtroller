@@ -22,8 +22,8 @@
                         {"optName":"BT_PHOENIX","name": "Phoenix HERMS"},
                         {"optName":"BT_PHOENIX","name": "Phoenix RIMS"},
                         {"optName":"BT_PHOENIX","name": "Phoenix Single Vessel"},
-                        {"optName":"BT_PHOENIX","name": "Phoenix Steam"},
-		],
+                        {"optName":"BT_PHOENIX","name": "Phoenix Steam"}
+                ],
 		"default": "Phoenix HERMS"
 	},
 	{
