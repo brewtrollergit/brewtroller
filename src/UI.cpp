@@ -1679,7 +1679,7 @@ unsigned long ulpow(unsigned long base, unsigned long exponent) {
  * Prompt the user for a value in hex. The value is shown with 0x prepended
  * and the user may only select 0-f for each digit.
  */
-unsigned long getHexValue(char sTitle[], unsigned long defValue) {
+unsigned long getHexValue(const char sTitle[], unsigned long defValue) {
     unsigned long retValue = defValue;
     byte cursorPos = 0;
     boolean cursorState = 0; //0 = Unselected, 1 = Selected
@@ -2050,8 +2050,7 @@ void menuSetup() {
     }
 }
 
-#ifdef RGBIO8_ENABLE
-#ifdef RGBIO8_SETUP
+#if defined(RGBIO8_ENABLE) && defined(RGBIO8_SETUP)
 
 void cfgRgb() {
     byte targetAddr = 0x7f;
@@ -2070,10 +2069,10 @@ void cfgRgb() {
         m.setItem_P(UIStrings::Generic::EXIT, 255);
         byte lastOption = scrollMenu("RGB Setup", &m);
         if (lastOption == 0) {
-            targetAddr = (byte) getHexValue("Target Address", targetAddr);
+            targetAddr = (byte) getHexValue(UIStrings::SystemSetup::RGBIO::TARGET_ADDR, targetAddr);
         }
         else if (lastOption == 1) {
-            byte address = (byte) getHexValue("Set Address", targetAddr);
+            byte address = (byte) getHexValue(UIStrings::SystemSetup::RGBIO::SET_ADDR, targetAddr);
             RGBIO8 rgb;
             rgb.begin(0, targetAddr);
             rgb.setAddress(address);
@@ -2098,7 +2097,6 @@ void cfgRgb() {
     }
 }
 
-#endif
 #endif
 
 void assignSensor() {
