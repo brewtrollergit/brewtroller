@@ -1,11 +1,6 @@
-#ifdef RGBIO8_ENABLE
-
-#include "Config.h"
 #include "Com_RGBIO8.h"
 
-#define SOFTSWITCH_OFF 0
-#define SOFTSWITCH_ON 1
-#define SOFTSWITCH_AUTO 2
+#ifdef RGBIO8_ENABLE
 
 byte softSwitchPv[PVOUT_COUNT];
 byte softSwitchHeat[HEAT_OUTPUTS_COUNT];

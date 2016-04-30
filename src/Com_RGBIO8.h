@@ -1,12 +1,21 @@
-#include "Config.h"
-
 #ifndef COM_RGBIO8_H
 #define COM_RGBIO8_H
+
+#include "BrewTroller.h"
+#include "Config.h"
+
 
 #ifdef RGBIO8_ENABLE
 
 #define RGBIO8_MAX_OUTPUT_RECIPES 4
 #define RGBIO8_INTERVAL 100
+
+#define SOFTSWITCH_OFF 0
+#define SOFTSWITCH_ON 1
+#define SOFTSWITCH_AUTO 2
+
+extern byte softSwitchHeat[HEAT_OUTPUTS_COUNT];
+extern byte softSwitchPv[PVOUT_COUNT];
 
 struct RGBIO8_output_assignment {
   byte type;
@@ -99,6 +108,9 @@ class RGBIO8 {
     void setOutput(byte output, uint16_t rgb);
     uint8_t crc8(uint8_t inCrc, uint8_t inData );
 };
+
+void RGBIO8_Init();
+void RGBIO8_Update();
 
 #endif
 

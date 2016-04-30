@@ -31,6 +31,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 #include "EEPROM.h"
 #include "Outputs.h"
 #include "Events.h"
+#include "Com_RGBIO8.h"
 
 extern const int HEAT_OUTPUTS_COUNT;
 
