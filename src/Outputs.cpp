@@ -205,6 +205,15 @@ void pinInit() {
     #if DIGIN_COUNT > 5
       digInPin[5].setup(DIGIN6_PIN, INPUT);
     #endif
+    #if DIGIN_COUNT > 6
+      digInPin[6].setup(DIGIN7_PIN, INPUT);
+    #endif
+    #if DIGIN_COUNT > 7
+      digInPin[7].setup(DIGIN8_PIN, INPUT);
+    #endif
+    #if DIGIN_COUNT > 8
+      digInPin[8].setup(DIGIN9_PIN, INPUT);
+    #endif
   #endif
 }
 
