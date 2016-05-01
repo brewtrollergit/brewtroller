@@ -19,10 +19,10 @@
 			{"optName":"OT_EX1_RIMSDF", "name": "EX1 RIMS"},
 			{"optName":"OT_EX1_SINGLEVESSEL", "name": "EX1 Single Vessel"},
 			{"optName":"OT_EX1_STEAMPWM", "name": "EX1 Steam"},
-                        {"optName":"BT_PHOENIX","name": "Phoenix HERMS"},
-                        {"optName":"BT_PHOENIX","name": "Phoenix RIMS"},
-                        {"optName":"BT_PHOENIX","name": "Phoenix Single Vessel"},
-                        {"optName":"BT_PHOENIX","name": "Phoenix Steam"}
+                        {"optName":"BT_PHOENIX_HERMS","name": "Phoenix HERMS"},
+                        {"optName":"BT_PHOENIX_RIMS","name": "Phoenix RIMS"},
+                        {"optName":"BT_PHOENIX_SINGLEVESSEL","name": "Phoenix Single Vessel"},
+                        {"optName":"BT_PHOENIX_STEAMPWM","name": "Phoenix Steam"}
                 ],
 		"default": "Phoenix HERMS"
 	},

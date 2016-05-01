@@ -69,8 +69,14 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 #elif defined(OT_EX1_STEAMPWM)
     #include "HWProfiles/OpenTroller EX1/Steam or PWM Pump/HWProfile.h"
 
-#elif defined(BT_PHOENIX)
-    #include "HWProfiles/BrewTroller Phoenix/HWProfile.h"
+#elif defined(BT_PHOENIX_HERMS)
+    #include "HWProfiles/BrewTroller Phoenix/HERMS/HWProfile.h"
+#elif defined(BT_PHOENIX_RIMS)
+    #include "HWProfiles/BrewTroller Phoenix/RIMS or Direct Fired/HWProfile.h"
+#elif defined(BT_PHOENIX_SINGLE_VESSEL)
+    #include "HWProfiles/BrewTroller Phoenix/Single Vessel/HWProfile.h"
+#elif defined(BT_PHOENIX_STEAM_PWM)
+    #include "HWProfiles/BrewTroller Phoenix/Steam or PWM Pump/HWProfile.h"
 #else
     #if !defined(BT_HWPROFILE)
         #error "BrewTroller Hardware type not defined"
