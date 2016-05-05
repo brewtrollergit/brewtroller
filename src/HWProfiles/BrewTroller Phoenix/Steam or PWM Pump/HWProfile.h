@@ -30,7 +30,7 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
   #define PWMPUMP_PIN 15
 
   #define DIGITAL_INPUTS
-  #define DIGIN_COUNT 8
+  #define DIGIN_COUNT 9 
   #define DIGIN1_PIN 31
   #define DIGIN2_PIN 30
   #define DIGIN3_PIN 29
