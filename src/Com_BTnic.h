@@ -39,78 +39,78 @@ Documentation, Forums and more information available at http://www.brewtroller.c
  ********************************************************************************************************************/
   // Using Values 65-90 & 97-122 for command codes to make terminal input easier 
   // but any value between 0-255 can be used with the following exceptions
-  // Command Field Char		9	(Tab)
-  // Command Term Char		10	(Line Feed)
-  // Command Term Char		13	(Carriage Return)
+  // Command Field Char         9  (Tab)
+  // Command Term Char          10 (Line Feed)
+  // Command Term Char          13 (Carriage Return)
 
   //Command codes for special responses
-  #define CMD_REJECT        33	//!
-  #define CMD_REJECT_PARAM  35	//#
-  #define CMD_REJECT_INDEX  36	//$
-  #define CMD_REJECT_CRC     42	// *
+  #define CMD_REJECT            33  //!
+  #define CMD_REJECT_PARAM      35  //#
+  #define CMD_REJECT_INDEX      36  //$
+  #define CMD_REJECT_CRC        42  //*
 
-  #define CMD_GET_PROGNAMES     62      //%3E
-  #define CMD_SET_PROGRAM       63      //%3F
-  #define CMD_GET_PROGRAM       64      //%40
-  #define CMD_GET_BOIL		65 	//A
-  #define CMD_GET_CAL		66 	//B
-  #define CMD_GET_EVAP		67 	//C
-  #define CMD_GET_OSET		68 	//D
-  #define CMD_GET_PROG		69 	//E
-  #define CMD_GET_TS		70 	//F
-  #define CMD_GET_VER		71 	//G
-  #define CMD_GET_VSET		72 	//H
-  #define CMD_INIT_EEPROM	73 	//I
-  #define CMD_SCAN_TS		74 	//J
-  #define CMD_SET_BOIL		75 	//K
-  #define CMD_SET_CAL		76 	//L
-  #define CMD_SET_EVAP		77 	//M
-  #define CMD_SET_OSET		78 	//N
-  #define CMD_SET_PROG		79 	//O
-  #define CMD_SET_TS		80 	//P
-  #define CMD_SET_VLVCFG	81 	//Q
-  #define CMD_SET_VSET		82 	//R
-  #define CMD_ADV_STEP		83 	//S
-  #define CMD_EXIT_STEP		84 	//T
-  #define CMD_INIT_STEP		85 	//U
-  #define CMD_SET_ALARM		86 	//V
-  #define CMD_SET_AUTOVLV	87 	//W
-  #define CMD_SET_SETPOINT	88 	//X
-  #define CMD_SET_TIMERSTATUS	89 	//Y
-  #define CMD_SET_TIMERVALUE	90 	//Z
-  #define CMD_GET_PROGNAME	91 	//'['
-  #define CMD_SET_PROGNAME	92 	//'\'
-  #define CMD_GET_PROGTEMPS	93 	//']'
-  #define CMD_SET_PROGTEMPS	94 	//'^'
-  #define CMD_GET_PROGMINS	95 	//'_'
-  #define CMD_SET_PROGMINS	96 	//'`'
-  #define CMD_GET_STATUS	97 	//a
-  #define CMD_SET_VLVPRF	98 	//b
-  #define CMD_RESET		99 	//c
-  #define CMD_GET_VLVCFG	100 	//d
-  #define CMD_GET_ALARM		101 	//e
-  #define CMD_GET_BOILPWR	102 	//f
-  #define CMD_GET_DELAYTIME	103 	//g
-  #define CMD_GET_GRAINTEMP	104 	//h
-  #define CMD_SET_BOILPWR	105 	//i
-  #define CMD_SET_DELAYTIME	106 	//j
-  #define CMD_SET_GRAINTEMP	107 	//k
-  #define CMD_STEPPRG		110 	//n
-  #define CMD_TIMER		111 	//o
-  #define CMD_VOL		112 	//p
-  #define CMD_TEMP		113 	//q
-  #define CMD_STEAM		114 	//r
-  #define CMD_HEATPWR		115 	//s
-  #define CMD_SETPOINT		116 	//t
-  #define CMD_AUTOVLV		117 	//u
-  #define CMD_VLVBITS		118 	//v
-  #define CMD_VLVPRF		119 	//w
-  #define CMD_GET_PROGVOLS	120 	//x
-  #define CMD_SET_PROGVOLS	121 	//y
-  #define CMD_SET_TGTVOL        123     //{
-  #define CMD_GET_TGTVOL        124     //|
-  #define CMD_SET_BOILCTL       125     //}
-  #define CMD_GET_BOILCTL       126     //~
+  #define CMD_GET_PROGNAMES     62  //%3E
+  #define CMD_SET_PROGRAM       63  //%3F
+  #define CMD_GET_PROGRAM       64  //%40
+  #define CMD_GET_BOIL          65  //A
+  #define CMD_GET_CAL           66  //B
+  #define CMD_GET_EVAP          67  //C
+  #define CMD_GET_OSET          68  //D
+  #define CMD_GET_PROG          69  //E
+  #define CMD_GET_TS            70  //F
+  #define CMD_GET_VER           71  //G
+  #define CMD_GET_VSET          72  //H
+  #define CMD_INIT_EEPROM       73  //I
+  #define CMD_SCAN_TS           74  //J
+  #define CMD_SET_BOIL          75  //K
+  #define CMD_SET_CAL           76  //L
+  #define CMD_SET_EVAP          77  //M
+  #define CMD_SET_OSET          78  //N
+  #define CMD_SET_PROG          79  //O
+  #define CMD_SET_TS            80  //P
+  #define CMD_SET_VLVCFG        81  //Q
+  #define CMD_SET_VSET          82  //R
+  #define CMD_ADV_STEP          83  //S
+  #define CMD_EXIT_STEP         84  //T
+  #define CMD_INIT_STEP         85  //U
+  #define CMD_SET_ALARM         86  //V
+  #define CMD_SET_AUTOVLV       87  //W
+  #define CMD_SET_SETPOINT      88  //X
+  #define CMD_SET_TIMERSTATUS   89  //Y
+  #define CMD_SET_TIMERVALUE    90  //Z
+  #define CMD_GET_PROGNAME      91  //'['
+  #define CMD_SET_PROGNAME      92  //'\'
+  #define CMD_GET_PROGTEMPS     93  //']'
+  #define CMD_SET_PROGTEMPS     94  //'^'
+  #define CMD_GET_PROGMINS      95  //'_'
+  #define CMD_SET_PROGMINS      96  //'`'
+  #define CMD_GET_STATUS        97  //a
+  #define CMD_SET_VLVPRF        98  //b
+  #define CMD_RESET             99  //c
+  #define CMD_GET_VLVCFG        100 //d
+  #define CMD_GET_ALARM         101 //e
+  #define CMD_GET_BOILPWR       102 //f
+  #define CMD_GET_DELAYTIME     103 //g
+  #define CMD_GET_GRAINTEMP     104 //h
+  #define CMD_SET_BOILPWR       105 //i
+  #define CMD_SET_DELAYTIME     106 //j
+  #define CMD_SET_GRAINTEMP     107 //k
+  #define CMD_STEPPRG           110 //n
+  #define CMD_TIMER             111 //o
+  #define CMD_VOL               112 //p
+  #define CMD_TEMP              113 //q
+  #define CMD_STEAM             114 //r
+  #define CMD_HEATPWR           115 //s
+  #define CMD_SETPOINT          116 //t
+  #define CMD_AUTOVLV           117 //u
+  #define CMD_VLVBITS           118 //v
+  #define CMD_VLVPRF            119 //w
+  #define CMD_GET_PROGVOLS      120 //x
+  #define CMD_SET_PROGVOLS      121 //y
+  #define CMD_SET_TGTVOL        123 //{
+  #define CMD_GET_TGTVOL        124 //|
+  #define CMD_SET_BOILCTL       125 //}
+  #define CMD_GET_BOILCTL       126 //~
   
   typedef enum {
     BTNIC_STATE_IDLE,
@@ -130,60 +130,60 @@ Documentation, Forums and more information available at http://www.brewtroller.c
     0,  //CMD_GET_PROGNAMES (All)
     22, //CMD_SET_PROGRAM (Full)
     0,  //CMD_GET_PROGRAM (Full)
-    0,	//CMD_GET_BOIL
-    0,	//CMD_GET_CAL
-    0,	//CMD_GET_EVAP
-    0,	//CMD_GET_OSET
-    0,	//CMD_GET_PROG
-    0,	//CMD_GET_TS
-    0,	//CMD_GET_VER
-    0,	//CMD_GET_VSET
-    1,	//CMD_INIT_EEPROM
-    0,	//CMD_SCAN_TS
-    1,	//CMD_SET_BOIL
-    2,	//CMD_SET_CAL
-    1,	//CMD_SET_EVAP
-    8,	//CMD_SET_OSET
-    6,	//CMD_SET_PROG
-    8,	//CMD_SET_TS
-    1,	//CMD_SET_VLVCFG
-    2,	//CMD_SET_VSET
-    0,	//CMD_ADV_STEP
-    0,	//CMD_EXIT_STEP
-    1,	//CMD_INIT_STEP
-    1,	//CMD_SET_ALARM
-    1,	//CMD_SET_AUTOVLV
-    1,	//CMD_SET_SETPOINT
-    1,	//CMD_SET_TIMERSTATUS
-    1,	//CMD_SET_TIMERVALUE
+    0,  //CMD_GET_BOIL
+    0,  //CMD_GET_CAL
+    0,  //CMD_GET_EVAP
+    0,  //CMD_GET_OSET
+    0,  //CMD_GET_PROG
+    0,  //CMD_GET_TS
+    0,  //CMD_GET_VER
+    0,  //CMD_GET_VSET
+    1,  //CMD_INIT_EEPROM
+    0,  //CMD_SCAN_TS
+    1,  //CMD_SET_BOIL
+    2,  //CMD_SET_CAL
+    1,  //CMD_SET_EVAP
+    8,  //CMD_SET_OSET
+    6,  //CMD_SET_PROG
+    8,  //CMD_SET_TS
+    1,  //CMD_SET_VLVCFG
+    2,  //CMD_SET_VSET
+    0,  //CMD_ADV_STEP
+    0,  //CMD_EXIT_STEP
+    1,  //CMD_INIT_STEP
+    1,  //CMD_SET_ALARM
+    1,  //CMD_SET_AUTOVLV
+    1,  //CMD_SET_SETPOINT
+    1,  //CMD_SET_TIMERSTATUS
+    1,  //CMD_SET_TIMERVALUE
     0,  //CMD_GET_PROGNAME
     1,  //CMD_SET_PROGNAME
     0,  //CMD_GET_PROGMASHTEMPS
     6,  //CMD_SET_PROGMASHTEMPS
     0,  //CMD_GET_PROGMASHMINS
     6,  //CMD_SET_PROGMASHMINS
-    0,	//CMD_GET_STATUS
-    2,	//CMD_SET_VLVPRF
-    0,	//CMD_RESET
-    0,	//CMD_GET_VLVCFG
-    0,	//CMD_GET_ALARM
-    0,	//CMD_GET_BOILPWR
-    0,	//CMD_GET_DELAYTIME
-    0,	//CMD_GET_GRAINTEMP
-    1,	//CMD_SET_BOILPWR
-    1,	//CMD_SET_DELAYTIME
-    1,	//CMD_SET_GRAINTEMP
-    0,	//Unused
-    0,	//Unused
-    0,	//CMD_STEPPRG
-    0,	//CMD_TIMER
-    0,	//CMD_VOL
-    0,	//CMD_TEMP
-    0,	//CMD_STEAM
-    0,	//CMD_HEATPWR
-    0,	//CMD_SETPOINT
-    0,	//CMD_AUTOVLV
-    0,	//CMD_VLVBITS
+    0,  //CMD_GET_STATUS
+    2,  //CMD_SET_VLVPRF
+    0,  //CMD_RESET
+    0,  //CMD_GET_VLVCFG
+    0,  //CMD_GET_ALARM
+    0,  //CMD_GET_BOILPWR
+    0,  //CMD_GET_DELAYTIME
+    0,  //CMD_GET_GRAINTEMP
+    1,  //CMD_SET_BOILPWR
+    1,  //CMD_SET_DELAYTIME
+    1,  //CMD_SET_GRAINTEMP
+    0,  //Unused
+    0,  //Unused
+    0,  //CMD_STEPPRG
+    0,  //CMD_TIMER
+    0,  //CMD_VOL
+    0,  //CMD_TEMP
+    0,  //CMD_STEAM
+    0,  //CMD_HEATPWR
+    0,  //CMD_SETPOINT
+    0,  //CMD_AUTOVLV
+    0,  //CMD_VLVBITS
     0,  //CMD_VLVPRF
     0,  //CMD_GET_PROGVOLS
     3,  //CMD_SET_PROGVOLS
@@ -191,72 +191,72 @@ Documentation, Forums and more information available at http://www.brewtroller.c
     1,  //CMD_SET_TGTVOL
     0,  //CMD_GET_TGTVOL
     2,  //CMD_SET_BOILCNT
-    0  //CMD_GET_BOILCNT
+    0   //CMD_GET_BOILCNT
   };
 
   static const byte CMD_INDEX_MAXVALUE[] PROGMEM =
   {
     0,                  //CMD_GET_PROGNAMES (All)
-    RECIPE_MAX - 1,   //CMD_SET_PROGRAM (Full)
-    RECIPE_MAX - 1,  //CMD_GET_PROGRAM (Full)
-    0, 			//CMD_GET_BOIL
-    29, 		//CMD_GET_CAL (0-9 HLT, 10-19 Mash, 20-29 Kettle)
-    0, 			//CMD_GET_EVAP
-    VS_STEAM, 		//CMD_GET_OSET
-    RECIPE_MAX - 1, 	//CMD_GET_PROG
-    NUM_TS - 1, 	//CMD_GET_TS
-    0, 			//CMD_GET_VER
-    VS_KETTLE, 		//CMD_GET_VSET
-    0, 			//CMD_INIT_EEPROM
-    0, 			//CMD_SCAN_TS
-    0, 			//CMD_SET_BOIL
-    29,	                //CMD_SET_CAL (0-9 HLT, 10-19 Mash, 20-29 Kettle)
-    0, 			//CMD_SET_EVAP
-    VS_STEAM, 		//CMD_SET_OSET
-    RECIPE_MAX - 1, 	//CMD_SET_PROG
-    NUM_TS - 1, 	//CMD_SET_TS
-    NUM_VLVCFGS - 1, 	//CMD_SET_VLVCFG
-    VS_KETTLE, 		//CMD_SET_VSET
+    RECIPE_MAX - 1,     //CMD_SET_PROGRAM (Full)
+    RECIPE_MAX - 1,     //CMD_GET_PROGRAM (Full)
+    0,                  //CMD_GET_BOIL
+    29,                 //CMD_GET_CAL (0-9 HLT, 10-19 Mash, 20-29 Kettle)
+    0,                  //CMD_GET_EVAP
+    VS_STEAM,           //CMD_GET_OSET
+    RECIPE_MAX - 1,     //CMD_GET_PROG
+    NUM_TS - 1,         //CMD_GET_TS
+    0,                  //CMD_GET_VER
+    VS_KETTLE,          //CMD_GET_VSET
+    0,                  //CMD_INIT_EEPROM
+    0,                  //CMD_SCAN_TS
+    0,                  //CMD_SET_BOIL
+    29,                 //CMD_SET_CAL (0-9 HLT, 10-19 Mash, 20-29 Kettle)
+    0,                  //CMD_SET_EVAP
+    VS_STEAM,           //CMD_SET_OSET
+    RECIPE_MAX - 1,     //CMD_SET_PROG
+    NUM_TS - 1,         //CMD_SET_TS
+    NUM_VLVCFGS - 1,    //CMD_SET_VLVCFG
+    VS_KETTLE,          //CMD_SET_VSET
     BREWSTEP_COUNT - 1, //CMD_ADV_STEP
     BREWSTEP_COUNT - 1, //CMD_EXIT_STEP
     BREWSTEP_COUNT - 1, //CMD_INIT_STEP
-    0, 			//CMD_SET_ALARM
-    0, 			//CMD_SET_AUTOVLV
-    VS_STEAM, 		//CMD_SET_SETPOINT
-    TIMER_BOIL, 	//CMD_SET_TIMERSTATUS
-    TIMER_BOIL, 	//CMD_SET_TIMERVALUE
-    RECIPE_MAX - 1, 	//CMD_GET_PROGNAME
-    RECIPE_MAX - 1, 	//CMD_SET_PROGNAME
-    RECIPE_MAX - 1, 	//CMD_GET_PROGTEMPS
-    RECIPE_MAX - 1, 	//CMD_SET_PROGTEMPS
-    RECIPE_MAX - 1, 	//CMD_GET_PROGMINS
-    RECIPE_MAX - 1, 	//CMD_SET_PROGMINS
-    0, 			//CMD_GET_STATUS
-    0, 			//CMD_SET_VLVPRF
-    1, 			//CMD_RESET
-    NUM_VLVCFGS - 1, 	//CMD_GET_VLVCFG
-    0, 			//CMD_GET_ALARM
-    0, 			//CMD_GET_BOILPWR
-    0, 			//CMD_GET_DELAYTIME
-    0, 			//CMD_GET_GRAINTEMP
-    0, 			//CMD_SET_BOILPWR
-    0, 			//CMD_SET_DELAYTIME
-    0, 			//CMD_SET_GRAINTEMP
-    0, 	                //Unused
-    0, 	                //Unused
-    0, 			//CMD_STEPPRG
-    TIMER_BOIL, 	//CMD_TIMER
-    VS_KETTLE, 		//CMD_VOL
-    VS_KETTLE, 		//CMD_TEMP
-    0, 			//CMD_STEAM
-    VS_STEAM, 		//CMD_HEATPWR
-    VS_STEAM, 		//CMD_SETPOINT
-    0, 			//CMD_AUTOVLV
-    0, 			//CMD_VLVBITS
-    0, 			//CMD_VLVPRF
-    RECIPE_MAX - 1,   //CMD_GET_PROGVOLS
-    RECIPE_MAX - 1,   //CMD_SET_PROGVOLS
-    0, 	                //Unused
+    0,                  //CMD_SET_ALARM
+    0,                  //CMD_SET_AUTOVLV
+    VS_STEAM,           //CMD_SET_SETPOINT
+    TIMER_BOIL,         //CMD_SET_TIMERSTATUS
+    TIMER_BOIL,         //CMD_SET_TIMERVALUE
+    RECIPE_MAX - 1,     //CMD_GET_PROGNAME
+    RECIPE_MAX - 1,     //CMD_SET_PROGNAME
+    RECIPE_MAX - 1,     //CMD_GET_PROGTEMPS
+    RECIPE_MAX - 1,     //CMD_SET_PROGTEMPS
+    RECIPE_MAX - 1,     //CMD_GET_PROGMINS
+    RECIPE_MAX - 1,     //CMD_SET_PROGMINS
+    0,                  //CMD_GET_STATUS
+    0,                  //CMD_SET_VLVPRF
+    1,                  //CMD_RESET
+    NUM_VLVCFGS - 1,    //CMD_GET_VLVCFG
+    0,                  //CMD_GET_ALARM
+    0,                  //CMD_GET_BOILPWR
+    0,                  //CMD_GET_DELAYTIME
+    0,                  //CMD_GET_GRAINTEMP
+    0,                  //CMD_SET_BOILPWR
+    0,                  //CMD_SET_DELAYTIME
+    0,                  //CMD_SET_GRAINTEMP
+    0,                  //Unused
+    0,                  //Unused
+    0,                  //CMD_STEPPRG
+    TIMER_BOIL,         //CMD_TIMER
+    VS_KETTLE,          //CMD_VOL
+    NUM_TS - 1,         //CMD_TEMP
+    0,                  //CMD_STEAM
+    VS_STEAM,           //CMD_HEATPWR
+    VS_STEAM,           //CMD_SETPOINT
+    0,                  //CMD_AUTOVLV
+    0,                  //CMD_VLVBITS
+    0,                  //CMD_VLVPRF
+    RECIPE_MAX - 1,     //CMD_GET_PROGVOLS
+    RECIPE_MAX - 1,     //CMD_SET_PROGVOLS
+    0,                  //Unused
     VS_KETTLE,          //CMD_SET_TGTVOL
     VS_KETTLE,          //CMD_GET_TGTVOL
     0,                  //CMD_SET_BOILCTL

@@ -26,7 +26,7 @@ BrewTroller Phoenix Single Vessel Hardware Configuration
   #define HLTHEAT_PIN 12
 
   #define DIGITAL_INPUTS
-  #define DIGIN_COUNT 8
+  #define DIGIN_COUNT 9
   #define DIGIN1_PIN 31
   #define DIGIN2_PIN 30
   #define DIGIN3_PIN 29
@@ -35,6 +35,7 @@ BrewTroller Phoenix Single Vessel Hardware Configuration
   #define DIGIN6_PIN 19
   #define DIGIN7_PIN 20
   #define DIGIN8_PIN 21
+  #define DIGIN9_PIN 22 //estop
 
   #define RS485_SERIAL_PORT 1
   #define RS485_RTS_PIN    23

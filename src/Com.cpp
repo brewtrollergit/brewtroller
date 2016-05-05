@@ -30,6 +30,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 #include "Config.h"
 #include "BrewTroller.h"
 #include "Com_BTPD.h"
+#include "Com_RGBIO8.h"
 #include "Com.h"
 
 //Function Forward Declarations

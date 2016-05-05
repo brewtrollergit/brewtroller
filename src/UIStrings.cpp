@@ -493,13 +493,11 @@ namespace UIStrings {
       
         //RGBIO8 Config Menu
         namespace RGBIO {
-#ifdef RGBIO8_ENABLE
-#ifdef RGBIO8_SETUP
-            const char TARGET_ADDR[] PROGMEM = "Target Addr:";
+#if defined(RGBIO8_ENABLE) && defined(RGBIO8_SETUP)
+            const char TARGET_ADDR[] PROGMEM = "Target Address";
             const char SET_ADDR[] PROGMEM = "Set Address";
             const char IDENTIFY[] PROGMEM = "Identify";
             const char RESTART[] PROGMEM = "Restart";
-#endif
 #endif
         }
         

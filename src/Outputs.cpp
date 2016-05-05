@@ -31,6 +31,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 #include "EEPROM.h"
 #include "Outputs.h"
 #include "Events.h"
+#include "Com_RGBIO8.h"
 
 extern const int HEAT_OUTPUTS_COUNT;
 
@@ -203,6 +204,15 @@ void pinInit() {
     #endif
     #if DIGIN_COUNT > 5
       digInPin[5].setup(DIGIN6_PIN, INPUT);
+    #endif
+    #if DIGIN_COUNT > 6
+      digInPin[6].setup(DIGIN7_PIN, INPUT);
+    #endif
+    #if DIGIN_COUNT > 7
+      digInPin[7].setup(DIGIN8_PIN, INPUT);
+    #endif
+    #if DIGIN_COUNT > 8
+      digInPin[8].setup(DIGIN9_PIN, INPUT);
     #endif
   #endif
 }
