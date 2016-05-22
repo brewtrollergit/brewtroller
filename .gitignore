@@ -11,5 +11,23 @@
 .idea
 .iml
 
-#build directory
+# build directory
 build/*
+
+# CMake Files
+Config.h
+Makefile
+CMakeCache.txt
+CMakeFiles/*
+cmake_install.cmake
+lib/CMakeFiles/*
+lib/Makefile
+lib/cmake_install.cmake
+src/CMakeFiles/*
+src/Makefile
+src/cmake_install.cmake
+
+# Output Files
+BrewTroller-*.hex
+BrewTroller-*.elf
+BrewTroller-*.map
