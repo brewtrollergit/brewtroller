@@ -88,7 +88,7 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
   //   11-bit (0.125C  / 0.225F ) = 375ms 
   //   10-bit (0.25C   / 0.45F  ) = 188ms 
   //    9-bit (0.5C    / 0.9F   ) =  94ms   
-  #define TS_ONEWIRE_RES 11
+  #define TS_ONEWIRE_RES 12
   
   // TS_ONEWIRE_FASTREAD: Enables faster reads of temperatures by reading only the first
   // 2 bytes of temperature data and ignoring CRC check.
