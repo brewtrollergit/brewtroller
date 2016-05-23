@@ -136,8 +136,8 @@ byte vSensor[3] = { HLTVOL_APIN, MASHVOL_APIN, KETTLEVOL_APIN};
 #endif
 
 //8-byte Temperature Sensor Address x9 Sensors
-byte tSensor[9][8];
-int temp[9];
+byte tSensor[NUM_TS][TEMP_ADDR_SIZE];
+int temp[NUM_TS];
 
 //Volume in (thousandths of gal/l)
 unsigned long tgtVol[3], volAvg[3], calibVols[3][10];

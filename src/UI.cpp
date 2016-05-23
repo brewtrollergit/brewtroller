@@ -2155,13 +2155,13 @@ void assignSensor() {
                 LCD.print_P(2,2,UIStrings::SystemSetup::TempSensorAssign::DISCONNECT_WARN2);
                 {
                     if (confirmChoice(UIStrings::Generic::CONTINUE, 3)) {
-                        byte addr[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+                        byte addr[TEMP_ADDR_SIZE] = {0, 0, 0, 0, 0, 0, 0, 0};
                         getDSAddr(addr);
                         setTSAddr(encValue, addr);
                     }
                 }
             } else if (selected == 1) {
-                byte addr[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+                byte addr[TEMP_ADDR_SIZE] = {0, 0, 0, 0, 0, 0, 0, 0};
                 setTSAddr(encValue, addr);
             }
             else if (selected > 2) return;

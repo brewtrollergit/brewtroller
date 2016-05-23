@@ -214,7 +214,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 #else
   void tempInit() {}
   void updateTemps() {}
-  void getDSAddr(byte addrRet[8]){};
+  void getDSAddr(byte addrRet[TEMP_ADDR_SIZE]){};
 #endif // TS_ONEWIRE
 
 #if defined MASH_AVG

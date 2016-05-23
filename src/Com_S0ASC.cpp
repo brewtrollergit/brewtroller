@@ -125,11 +125,11 @@ boolean chkMsg() {
           initEEPROM();
         } else if(strcasecmp(msg[0], "SCAN_TS") == 0) {
           clearMsg();
-          byte tsAddr[8];
+          byte tsAddr[TEMP_ADDR_SIZE];
           getDSAddr(tsAddr);
           logStart_P(LOGCFG);
           logField_P(PSTR("TS_SCAN")); 
-          for (byte i=0; i<8; i++) logFieldI(tsAddr[i]);
+          for (byte i=0; i<TEMP_ADDR_SIZE; i++) logFieldI(tsAddr[i]);
           logEnd();
         } else if(strcasecmp(msg[0], "SET_BOIL") == 0) {
           if (msgField == 1) {
@@ -214,8 +214,8 @@ boolean chkMsg() {
         } else if(strcasecmp(msg[0], "SET_TS") == 0) {
           byte val = atoi(msg[1]);
           if (msgField == 9 && val >= TS_HLT && val < NUM_TS) {
-            byte addr[8];
-            for (byte i=0; i<8; i++) addr[i] = (byte)atoi(msg[i+2]);
+            byte addr[TEMP_ADDR_SIZE];
+            for (byte i=0; i<TEMP_ADDR_SIZE; i++) addr[i] = (byte)atoi(msg[i+2]);
             setTSAddr(val, addr);
             clearMsg();
             logTSensor(val);
