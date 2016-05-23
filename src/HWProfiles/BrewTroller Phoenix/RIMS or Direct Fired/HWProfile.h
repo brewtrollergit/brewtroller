@@ -23,9 +23,9 @@ BrewTroller Phoenix RIMS/Direct Fired Hardware Configuration
   #define MUX_ENABLE_PIN 2
   #define MUX_ENABLE_LOGIC 0
   
-  #define HLTHEAT_PIN 12
-  #define MASHHEAT_PIN 13
-  #define KETTLEHEAT_PIN 14
+  #define HLTHEAT_PIN 12    //Output Terminal 1
+  #define MASHHEAT_PIN 13   //Output Terminal 2
+  #define KETTLEHEAT_PIN 14 //Output Terminal 3
 
   #define DIGITAL_INPUTS
   #define DIGIN_COUNT 9

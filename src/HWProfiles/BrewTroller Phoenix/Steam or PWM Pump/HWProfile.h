@@ -23,11 +23,11 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
   #define MUX_ENABLE_PIN 2
   #define MUX_ENABLE_LOGIC 0
   
-  #define HLTHEAT_PIN 12
-  #define MASHHEAT_PIN 13
-  #define KETTLEHEAT_PIN 14
-  #define STEAMHEAT_PIN 15
-  #define PWMPUMP_PIN 15
+  #define HLTHEAT_PIN 12     //Output Terminal 1
+  #define MASHHEAT_PIN 13    //Output Terminal 2
+  #define KETTLEHEAT_PIN 14  //Output Terminal 3
+  #define STEAMHEAT_PIN 15   //Output Terminal 4
+  #define PWMPUMP_PIN 15     //Output Terminal 4
 
   #define DIGITAL_INPUTS
   #define DIGIN_COUNT 9 
@@ -43,7 +43,8 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
 
   #define RS485_SERIAL_PORT 1
   #define RS485_RTS_PIN    23
-  #define PVOUT_TYPE_MODBUS
+  //#define PVOUT_TYPE_MODBUS
+  //#define NUM_MODBUS_BOARDS 1
   
   #define HLTVOL_APIN 7
   #define MASHVOL_APIN 6
