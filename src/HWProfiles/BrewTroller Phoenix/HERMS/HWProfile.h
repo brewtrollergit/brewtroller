@@ -96,6 +96,11 @@ BrewTroller Phoenix HERMS Hardware Configuration
   #define DS2482_ADDR 0x1B
   //**********************************************************************************
 
+  //  Enables lookup of the board temperature
+  #define TC74_BOARD_TEMP
+  #define TC74_I2C_ADDR 0x48
+  // Enable to track and monitor board temperature
+  #define MONITOR_BOARD_TEMP
 
   //**********************************************************************************
   // Serial0 Communication Options

@@ -80,56 +80,6 @@ Documentation, Forums and more information available at http://www.brewtroller.c
     void mashAvg();
   #endif
 
-  unsigned long convStart;
-
-  void tempInit() {
-    for (byte i = 0; i < NUM_TS; i++) temp[i] = BAD_TEMP;
-    #ifdef TS_ONEWIRE_I2C
-    masterIsConfigured = ds.configure(dsConfig);
-    if (masterIsConfigured) {
-    #endif
-    ds.reset();
-    ds.skip();
-    ds.write(WRITE_SCRATCHPAD_CMD, TS_ONEWIRE_PPWR); //Write to scratchpad
-    ds.write(TH_REGISTER, TS_ONEWIRE_PPWR); //Default value of TH reg (user byte 1)
-    ds.write(TL_REGISTER, TS_ONEWIRE_PPWR); //Default value of TL reg (user byte 2)
-    ds.write(RES_VALUE, TS_ONEWIRE_PPWR);
-    ds.reset();
-    ds.skip();
-    ds.write(COPY_SCRATCHPAD_CMD, TS_ONEWIRE_PPWR); //Copy scratchpad to EEPROM
-    #ifdef TS_ONEWIRE_I2C
-    }
-    #endif
-  }
-
-  void updateTemps() {
-    #ifdef TS_ONEWIRE_I2C
-      if (!masterIsConfigured) {
-          tempInit(); // if the master isn't configured, try again
-      }
-      if (!masterIsConfigured) return; // if we still aren't setup, abort
-    #endif
-    if (convStart == 0) {
-      ds.reset();
-      ds.skip();
-      ds.write(CONVERT_TEMP_CMD, TS_ONEWIRE_PPWR); //Start conversion
-      convStart = millis();   
-    } else if (tsReady() || millis() - convStart >= CONV_DELAY) {
-      for (byte i = 0; i < NUM_TS; i++) {
-        if (validAddr(tSensor[i]))
-          temp[i] = readTemp(tSensor[i]);
-        else 
-          temp[i] = BAD_TEMP;
-      }
-      
-      convStart = 0;
-      
-      #if defined MASH_AVG
-        mashAvg();
-      #endif
-    }
-  }
-
   boolean tsReady() {
     #ifdef TS_ONEWIRE_I2C
       if (!masterIsConfigured) {
@@ -180,10 +130,10 @@ Documentation, Forums and more information available at http://www.brewtroller.c
   //Returns Int representing hundreths of degree
   int readTemp(byte* addr) {
     #ifdef TS_ONEWIRE_I2C
-    if (!masterIsConfigured) {
-        tempInit(); // if the master isn't configured, try again
-    }
-    if (!masterIsConfigured) return BAD_TEMP; // if we still aren't setup, abort
+      if (!masterIsConfigured) {
+          tempInit(); // if the master isn't configured, try again
+      }
+      if (!masterIsConfigured) return BAD_TEMP; // if we still aren't setup, abort
     #endif
     long tempOut;
     byte data[SCRATCHPAD_SIZE];
@@ -211,11 +161,133 @@ Documentation, Forums and more information available at http://www.brewtroller.c
       return int((tempOut * 9 / 5) + 3200);
     #endif
   }
+
+  void owTempInit()
+  {
+      for (byte i = 0; i < NUM_TS; i++) temp[i] = BAD_TEMP;
+      #ifdef TS_ONEWIRE_I2C
+        masterIsConfigured = ds.configure(dsConfig);
+        if (masterIsConfigured) {
+      #endif
+          ds.reset();
+          ds.skip();
+          ds.write(WRITE_SCRATCHPAD_CMD, TS_ONEWIRE_PPWR); //Write to scratchpad
+          ds.write(TH_REGISTER, TS_ONEWIRE_PPWR); //Default value of TH reg (user byte 1)
+          ds.write(TL_REGISTER, TS_ONEWIRE_PPWR); //Default value of TL reg (user byte 2)
+          ds.write(RES_VALUE, TS_ONEWIRE_PPWR);
+          ds.reset();
+          ds.skip();
+          ds.write(COPY_SCRATCHPAD_CMD, TS_ONEWIRE_PPWR); //Copy scratchpad to EEPROM
+      #ifdef TS_ONEWIRE_I2C
+        }
+      #endif
+  }
+
+  unsigned long convStart;
+
+  void owTempUpdate()
+  {
+      #ifdef TS_ONEWIRE_I2C
+        if (!masterIsConfigured) {
+            tempInit(); // if the master isn't configured, try again
+        }
+        if (!masterIsConfigured) return; // if we still aren't setup, abort
+      #endif
+      if (convStart == 0) {
+          ds.reset();
+          ds.skip();
+          ds.write(CONVERT_TEMP_CMD, TS_ONEWIRE_PPWR); //Start conversion
+          convStart = millis();
+      }
+      else if (tsReady() || millis() - convStart >= CONV_DELAY) {
+          for (byte i = 0; i < NUM_TS; i++) {
+              if (validAddr(tSensor[i]))
+                  temp[i] = readTemp(tSensor[i]);
+              else
+                  temp[i] = BAD_TEMP;
+          }
+
+          convStart = 0;
+
+          #if defined MASH_AVG
+            mashAvg();
+          #endif
+      }
+    }
 #else
-  void tempInit() {}
-  void updateTemps() {}
+  void owTempInit() {};
+  void owTempUpdate() {};
   void getDSAddr(byte addrRet[TEMP_ADDR_SIZE]){};
 #endif // TS_ONEWIRE
+
+#if defined(TC74_BOARD_TEMP) && defined(TC74_I2C_ADDR)
+  int getBoardTemp()
+  {
+      Wire.beginTransmission(TC74_I2C_ADDR);
+      Wire.write(0x00);
+      if (Wire.endTransmission() != 0) return BAD_TEMP;
+      if (Wire.requestFrom(TC74_I2C_ADDR, 1) != 1) return BAD_TEMP;
+      while (Wire.available() == 0) delay(1);
+      long celsius = Wire.read() * 100;
+
+      #ifdef USEMETRIC
+        return int(celsius);
+      #else
+        return int((celsius * 9 / 5) + 3200);
+      #endif
+  }
+
+  #if defined(MONITOR_BOARD_TEMP)
+    // Averages 25 samples over 2:00 mins
+    #define BOARD_SAMPLE_SIZE 24
+    #define BOARD_SAMPLE_DURATION 5000
+    int      samples[BOARD_SAMPLE_SIZE];
+    byte     samplePos = 0;
+    uint32_t lastBoardSample;
+    uint32_t boardTempSum =0;
+    int      avgBoardTemp = 0;
+
+    void boardTempInit()
+    {
+        memset(samples, 0, sizeof(samples));
+        lastBoardSample = millis();
+    }
+
+    void boardTempUpdate()
+    {
+        if (millis() - lastBoardSample >= BOARD_SAMPLE_DURATION)
+        {
+            boardTempSum -= samples[samplePos];
+            samples[samplePos] = getBoardTemp();
+            boardTempSum += samples[samplePos++];
+            avgBoardTemp = int(boardTempSum / BOARD_SAMPLE_SIZE);
+            if (samplePos == BOARD_SAMPLE_SIZE) samplePos = 0;
+        }
+    }
+    int getAvgBoardTemp() {
+        return avgBoardTemp;
+    }
+  #else
+    void boardTempInit()   {}
+    void boardTempUpdate() {}
+    int  getAvgBoardTemp() { return BAD_TEMP;  }
+  #endif
+#else
+  int  getAvgBoardTemp() { return BAD_TEMP; }
+  int  getBoardTemp() { return BAD_TEMP; }
+  void boardTempInit() {}
+  void boardTempUpdate() {}
+#endif
+
+void tempInit() {
+    owTempInit();
+    boardTempInit();
+}
+
+void updateTemps() {
+    owTempUpdate();
+    boardTempUpdate();
+}
 
 #if defined MASH_AVG
   void mashAvg() {
