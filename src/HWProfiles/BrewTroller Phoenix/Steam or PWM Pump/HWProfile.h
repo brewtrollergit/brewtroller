@@ -43,8 +43,7 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
 
   #define RS485_SERIAL_PORT 1
   #define RS485_RTS_PIN    23
-  //#define PVOUT_TYPE_MODBUS
-  //#define NUM_MODBUS_BOARDS 1
+  #define PVOUT_TYPE_MODBUS
   
   #define HLTVOL_APIN 7
   #define MASHVOL_APIN 6

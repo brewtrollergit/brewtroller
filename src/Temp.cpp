@@ -45,7 +45,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
 
 #define MAX_SCAN_COUNT       20    // Number of devices to scan for
 #define SCRATCHPAD_SIZE      9     // Size of the scratchpad in bytes
-#define CRC_SIZE             8     // Size ofthe CRC in bytes
+#define CRC_SIZE             8     // Size of the CRC in bytes
 #define CRC_INDEX            8     // Index of CRC in the scratchpad
 
 #define DS18B20_IDENT        0x28
