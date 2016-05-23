@@ -140,7 +140,7 @@ void loadSetup() {
     loadVlvConfigs();
   
     #ifdef PVOUT_TYPE_MODBUS
-      for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) 
+      for (byte i = 0; i < NUM_MODBUS_BOARDS; i++)
         loadVlvModbus(i);
     #endif
   #endif
@@ -674,11 +674,11 @@ boolean checkConfig() {
       for (byte trig = 0; trig < NUM_TRIGGERS; trig++) EEPROM.write(2050 + trig, 0);
       EEPROM.write(2047, 2);
     case 2:
-      for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++)
+      for (byte i = 0; i < NUM_MODBUS_BOARDS; i++)
         setVlvModbusDefaults(i);
       EEPROM.write(2047, 3);
     case 3:
-      for (uint8_t i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) {
+      for (uint8_t i = 0; i < NUM_MODBUS_BOARDS; i++) {
           setVlvModbusDefaults(i);
       }
       EEPROM.write(2057, 4);

@@ -113,25 +113,16 @@ extern long flowRate[3];
 extern LCDI2C LCD;
 #endif
 
-
-
 //Valve Variables
 extern unsigned long vlvConfig[NUM_VLVCFGS], actProfiles;
 extern boolean autoValve[NUM_AV];
 
-//Create the appropriate 'Valves' object for the hardware configuration (GPIO, MUX, MODBUS)
-#if defined PVOUT_TYPE_GPIO
-#define PVOUT
-extern PVOutGPIO Valves;
-
-#elif defined PVOUT_TYPE_MUX
-  #define PVOUT
-  extern PVOutMUX Valves;
+#if !defined(NUM_MODBUS_BOARDS)
+  #define NUM_MODBUS_BOARDS 0
 #endif
 
-#ifdef PVOUT_TYPE_MODBUS
-extern PVOutMODBUS *ValvesMB[PVOUT_MODBUS_MAXBOARDS];
-#endif
+extern OutputBank* outputBanks[1+NUM_MODBUS_BOARDS];
+
 
 //Shared buffers
 extern char buf[20];

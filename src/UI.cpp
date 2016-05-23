@@ -2611,7 +2611,7 @@ unsigned long cfgValveProfile (char sTitle[], unsigned long defValue) {
     
     encMax = PVOUT_COUNT + 1;
 #ifdef PVOUT_TYPE_MODBUS
-    for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) {
+    for (byte i = 0; i < PVOUT_MODBUS_NUMBOARDS; i++) {
         if (ValvesMB[i])
             encMax = max(encMax, ValvesMB[i]->offset() + ValvesMB[i]->count() + 1);
     }
@@ -2721,8 +2721,8 @@ const uint8_t ku8MBResponseTimedOut           = 0xE2;
 
 void cfgMODBUSOutputs() {
     while(1) {
-        menu boardMenu(3, PVOUT_MODBUS_MAXBOARDS + 1);
-        for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) {
+        menu boardMenu(3, PVOUT_MODBUS_NUMBOARDS + 1);
+        for (byte i = 0; i < PVOUT_MODBUS_NUMBOARDS; i++) {
             boardMenu.setItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::BOARD, i);
             boardMenu.appendItem(itoa(i, buf, 10), i);
             if (!ValvesMB[i])
@@ -2742,7 +2742,7 @@ void cfgMODBUSOutputs() {
         boardMenu.setItem_P(UIStrings::Generic::EXIT, 255);
         
         byte lastOption = scrollMenu("RS485 Outputs", &boardMenu);
-        if (lastOption < PVOUT_MODBUS_MAXBOARDS) cfgMODBUSOutputBoard(lastOption);
+        if (lastOption < PVOUT_MODBUS_NUMBOARDS) cfgMODBUSOutputBoard(lastOption);
         else return;
     }
 }

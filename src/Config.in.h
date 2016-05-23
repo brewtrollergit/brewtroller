@@ -478,18 +478,18 @@ static const uint8_t TS = 1;
 //**********************************************************************************
 // RS485/Modbus Configuration
 //**********************************************************************************
-#define RS485_BAUDRATE    76800
-#define RS485_PARITY      SERIAL_8E1
 
-#define PVOUT_MODBUS_MAXBOARDS     4
+#define RS485_BAUDRATE             76800
+#define RS485_PARITY               SERIAL_8E1
+
 #define PVOUT_MODBUS_DEFCOILREG    1000
 #define PVOUT_MODBUS_DEFCOILCOUNT  8
 #define PVOUT_MODBUS_BASEADDR      10
-#define PVOUT_MODBUS_ADDRNONE 255
-#define PVOUT_MODBUS_ADDRINIT 247
-#define PVOUT_MODBUS_REGIDMODE 9000
-#define PVOUT_MODBUS_REGSLAVEADDR 9001
-#define PVOUT_MODBUS_REGRESTART 9002
+#define PVOUT_MODBUS_ADDRNONE      255
+#define PVOUT_MODBUS_ADDRINIT      247
+#define PVOUT_MODBUS_REGIDMODE     9000
+#define PVOUT_MODBUS_REGSLAVEADDR  9001
+#define PVOUT_MODBUS_REGRESTART    9002
 
 /***********************************************************************************
  * EXPERIMENTAL OPTIONS
