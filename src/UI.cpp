@@ -99,7 +99,7 @@ const byte CHARFIELD[] PROGMEM = {B11111, B00000, B00000, B00000, B00000, B00000
 const byte CHARCURSOR[] PROGMEM = {B11111, B11111, B00000, B00000, B00000, B00000, B00000, B00000};
 const byte CHARSEL[] PROGMEM = {B10001, B11111, B00000, B00000, B00000, B00000, B00000, B00000};
 
-#ifdef LOGO_TROLL
+#ifdef TROLL_HOME_SCREEN
 const byte BMP0[] PROGMEM = {B00000, B00000, B00000, B00000, B00011, B01111, B11111, B11111};
 const byte BMP1[] PROGMEM = {B00000, B00000, B00000, B00000, B11100, B11110, B11111, B11111};
 const byte BMP2[] PROGMEM = {B00001, B00011, B00111, B01111, B00001, B00011, B01111, B11111};
@@ -109,7 +109,7 @@ const byte BMP5[] PROGMEM = {B11111, B00111, B00111, B11111, B11111, B11111, B11
 const byte BMP6[] PROGMEM = {B11111, B11111, B11110, B11101, B11011, B00111, B11111, B11111};
 #endif
 
-#ifdef LOGO_BREWTROLLER
+#if defined(BT_HOME_SCREEN) || defined(CUSTOM_HOME_SCREEN)
 const byte BMP0[] PROGMEM = {B00000, B00000, B00000, B11111, B10001, B10001, B11111, B00001};
 const byte BMP1[] PROGMEM = {B00000, B00000, B00000, B00000, B00000, B00011, B01100, B01111};
 const byte BMP2[] PROGMEM = {B00000, B00000, B00000, B00000, B00000, B11100, B00011, B11111};
@@ -147,8 +147,6 @@ void uiInit() {
 #else
     Encoder.begin(ENCODER_I2CADDR);
 #endif
-    
-    
     
     //Check to see if EEPROM Initialization is needed
     if (checkConfig()) {
@@ -255,7 +253,41 @@ void screenInit() {
     
     if (activeScreen == SCREEN_HOME) {
         //Screen Init: Home
-#ifdef LOGO_TROLL
+#if defined(CUSTOM_HOME_SCREEN)
+        LCD.setCustChar_P(0, BMP0);
+        LCD.setCustChar_P(1, BMP1);
+        LCD.setCustChar_P(2, BMP2);
+        LCD.setCustChar_P(3, BMP3);
+        LCD.setCustChar_P(4, BMP4);
+        LCD.writeCustChar(0, 0, 0);
+        LCD.writeCustChar(0, 1, 1);
+        LCD.writeCustChar(0, 2, 2);
+        LCD.writeCustChar(1, 1, 3);
+        LCD.writeCustChar(1, 2, 4);
+        LCD.print_P(0, 4, CUSTOM_HOME_LINE1);
+        LCD.print_P(1, 4, CUSTOM_HOME_LINE2);
+        LCD.print_P(2, 4, CUSTOM_HOME_LINE3);
+        LCD.print_P(3, 10, UIStrings::Generic::BTVER);
+        LCD.print_P(3, 14, BTVER);
+        LCD.print_P(3, 17, UIStrings::Generic::DOT);
+        LCD.lPad(3, 18, itoa(BUILDNUM, buf, 10), 2, '0');
+#elif defined(BT_HOME_SCREEN)
+        LCD.setCustChar_P(0, BMP0);
+        LCD.setCustChar_P(1, BMP1);
+        LCD.setCustChar_P(2, BMP2);
+        LCD.setCustChar_P(3, BMP3);
+        LCD.setCustChar_P(4, BMP4);
+        LCD.writeCustChar(0, 0, 0);
+        LCD.writeCustChar(0, 1, 1);
+        LCD.writeCustChar(0, 2, 2);
+        LCD.writeCustChar(1, 1, 3);
+        LCD.writeCustChar(1, 2, 4);
+        LCD.print_P(1, 4, BT);
+        LCD.print_P(1, 16, BTVER);
+        LCD.print_P(2, 4, UIStrings::HomeScreen::BUILD);
+        LCD.lPad(2, 10, itoa(BUILDNUM, buf, 10), 4, '0');
+        LCD.print_P(3, 0, UIStrings::HomeScreen::BT_URL);
+#elif defined(TROLL_HOME_SCREEN)
         LCD.setCustChar_P(0, BMP0);
         LCD.setCustChar_P(1, BMP1);
         LCD.setCustChar_P(2, BMP2);
@@ -274,23 +306,6 @@ void screenInit() {
         LCD.print_P(3, 0, BT);
         LCD.print_P(3, 12, BTVER);
         LCD.lPad(3, 16, itoa(BUILDNUM, buf, 10), 4, '0');
-#endif
-#ifdef LOGO_BREWTROLLER
-        LCD.setCustChar_P(0, BMP0);
-        LCD.setCustChar_P(1, BMP1);
-        LCD.setCustChar_P(2, BMP2);
-        LCD.setCustChar_P(3, BMP3);
-        LCD.setCustChar_P(4, BMP4);
-        LCD.writeCustChar(0, 0, 0);
-        LCD.writeCustChar(0, 1, 1);
-        LCD.writeCustChar(0, 2, 2);
-        LCD.writeCustChar(1, 1, 3);
-        LCD.writeCustChar(1, 2, 4);
-        LCD.print_P(1, 4, BT);
-        LCD.print_P(1, 16, BTVER);
-        LCD.print_P(2, 4, UIStrings::HomeScreen:: BUILD);
-        LCD.lPad(2, 10, itoa(BUILDNUM, buf, 10), 4, '0');
-        LCD.print_P(3, 0, UIStrings::HomeScreen::BT_URL);
 #endif
         
     }

@@ -54,6 +54,8 @@ namespace UIStrings {
         const char COLON_SPACE[] PROGMEM = ": ";
         const char PERC_SYM[] PROGMEM = "%";
         const char EMPTY[] PROGMEM = "";
+        const char BTVER[] PROGMEM = "BT v";
+        const char DOT[] PROGMEM = ".";
     }
     
     namespace Shared {

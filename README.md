@@ -46,26 +46,30 @@ This ensures that all build artifacts are stored in the build directory and not 
 
 Available Hardware profile options are:
 
-    BT_10_21               --> 1.0 - 2.1
-    BT_22_24               --> 2.2 - 2.4
-    BT_3X                  --> 3.X
-    BT_4P                  --> 4.X Pro
-    OT_BX1_HERMS           --> BX1 HERMS
-    OT_BX1_HERMSI2CLCD     --> BX1 HERMS + I2CLCD
-    OT_BX1_RIMSDF          --> BX1 RIMS / Direct Fired
-    OT_BX1_RIMSDFI2CLCD    --> BX1 RIMS / Direct Fired + I2CLCD
-    OT_BX1_SINGLEVESSEL    --> BX1 Single Vessel
-    OT_BX1_STEAMPWM        --> BX1 Steam or PWM Pump
-    OT_BX1_STEAMPWMI2CLCD  --> BX1 Steam or PWM Pump + I2CLCD
-    OT_DX1_HERMS           --> DX1 HERMS
-    OT_DX1_RIMSDF          --> DX1 RIMS / Direct Fired
-    OT_DX1_SINGLEVESSEL    --> DX1 Single Vessel
-    OT_DX1_STEAMPWM        --> DX1 Steam or PWM Pump
-    OT_EX1_HERMS           --> EX1 HERMS
-    OT_EX1_RIMSDF          --> EX1 RIMS / Direct Fired
-    OT_EX1_SINGLEVESSEL    --> EX1 Single Vessel
-    OT_EX1_STEAMPWM        --> EX1 Steam or PWM Pump
-If no board option is specified DX1 HERMS is built by default.
+    BT_10_21                --> 1.0 - 2.1
+    BT_22_24                --> 2.2 - 2.4
+    BT_3X                   --> 3.X
+    BT_4P                   --> 4.X Pro
+    OT_BX1_HERMS            --> BX1 HERMS
+    OT_BX1_HERMSI2CLCD      --> BX1 HERMS + I2CLCD
+    OT_BX1_RIMSDF           --> BX1 RIMS / Direct Fired
+    OT_BX1_RIMSDFI2CLCD     --> BX1 RIMS / Direct Fired + I2CLCD
+    OT_BX1_SINGLEVESSEL     --> BX1 Single Vessel
+    OT_BX1_STEAMPWM         --> BX1 Steam or PWM Pump
+    OT_BX1_STEAMPWMI2CLCD   --> BX1 Steam or PWM Pump + I2CLCD
+    OT_DX1_HERMS            --> DX1 HERMS
+    OT_DX1_RIMSDF           --> DX1 RIMS / Direct Fired
+    OT_DX1_SINGLEVESSEL     --> DX1 Single Vessel
+    OT_DX1_STEAMPWM         --> DX1 Steam or PWM Pump
+    OT_EX1_HERMS            --> EX1 HERMS
+    OT_EX1_RIMSDF           --> EX1 RIMS / Direct Fired
+    OT_EX1_SINGLEVESSEL     --> EX1 Single Vessel
+    OT_EX1_STEAMPWM         --> EX1 Steam or PWM Pump
+    BT_PHOENIX_HERMS        --> Phoenix HERMS
+    BT_PHOENIX_RIMS         --> Phoenix RIMS / Direct Fired
+    BT_PHOENIX_SINGLEVESSEL --> Phoenix Single Vessel
+    BT_PHOENIX_STEAMPWM     --> Phoenix Steam or PWM Pump
+If no board option is specified Phoenix HERMS is built by default.
 
 Available AVR_MCU options are:
 

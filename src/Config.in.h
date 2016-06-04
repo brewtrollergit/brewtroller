@@ -366,10 +366,14 @@ static const uint8_t TS = 1;
 //**********************************************************************************
 // UI: Home Screen Options
 //**********************************************************************************
-// LOGO_TROLL: Old Home screen with Troll icon
-// LOGO_BREWTROLLER: New Home Screen based on new BrewTroller logo
-//#define LOGO_TROLL
-#define LOGO_BREWTROLLER
+//#define TROLL_HOME_SCREEN  // Old Home screen with Troll icon
+#define BT_HOME_SCREEN     // New Home Screen based on new BrewTroller logo
+
+#ifdef CUSTOM_HOME_SCREEN
+const char CUSTOM_HOME_LINE1[14] PROGMEM = "Custom Line 1";
+const char CUSTOM_HOME_LINE2[15] PROGMEM = "Custom Line 2";
+const char CUSTOM_HOME_LINE3[15] PROGMEM = "Custom Line 3";
+#endif
 
 
 //**********************************************************************************
