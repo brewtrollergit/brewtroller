@@ -61,14 +61,14 @@ char lineBuf[11] = { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
 #endif
 
 float getFloat(DisplayLine& line);
-void sendStringBTPD(byte chan, const char *string);
-void sendFloatBTPD(byte chan, byte position, float line);
-void sendFloatsBTPD(byte chan, float line1, float line2);
+void  sendFloatBTPD(byte chan, byte position, float line);
+void  sendFloatsBTPD(byte chan, float line1, float line2);
 #ifdef BTPD_TIMERS
-void setFloatStr(char* buf, DisplayLine& line);
-void setTimeStr(char* buf, byte timer);
-void convertTimeSegment(char* buf, byte val);
-void sendTimeBTPD(byte chan, byte timer);
+void  sendStringBTPD(byte chan, const char *string, int length);
+char* setFloatStr(char* buf, DisplayLine& line);
+char* setTimeStr(char* buf, byte timer);
+void  convertTimeSegment(char* buf, byte val);
+void  sendTimeBTPD(byte chan, byte timer);
 #endif
 
 //************************************ Custimization Instructions ************************************
@@ -107,8 +107,8 @@ PIDDisplay displays[BTPD_COUNT] = {
     {
         0x20,
         {
-            { PDT_TEMPSP, TS_HLT},
-            { PDT_TEMP,   TS_HLT}
+            { PDT_TEMPSP, TIMER_MASH },
+            { PDT_TEMP,   TS_HLT }
         }
     },
 #if BTPD_COUNT > 1
@@ -116,8 +116,8 @@ PIDDisplay displays[BTPD_COUNT] = {
     {
         0x21,
         {
-            { PDT_TEMPSP, TS_MASH},
-            { PDT_TEMP,   TS_MASH}
+            { PDT_TEMPSP, TS_MASH },
+            { PDT_TEMP,   TS_MASH }
         }
     },
 #endif
@@ -127,7 +127,7 @@ PIDDisplay displays[BTPD_COUNT] = {
         0x23,
         {
             { PDT_TEMPSP, TS_KETTLE },
-            { PDT_TEMP,   TS_KETTLE}
+            { PDT_TEMP,   TS_KETTLE }
         }
     },
 #endif
@@ -161,6 +161,7 @@ PIDDisplay displays[BTPD_COUNT] = {
 
 void updateBTPD() {
     byte chan;
+    char *pos;
 
     if (millis() - lastBTPD > BTPD_INTERVAL) {
         for (int x = 0; x < BTPD_COUNT; ++x) {
@@ -178,21 +179,24 @@ void updateBTPD() {
             {
                 setTimeStr(lineBuf, displays[x].lines[0].ref);
                 setTimeStr(lineBuf + 5, displays[x].lines[1].ref);
-                sendStringBTPD(displays[x].address, lineBuf);
+                sendStringBTPD(displays[x].address, lineBuf, 10);
             }
             else // Timer and something else
             {
                 if (displays[x].lines[0].type == PDT_TIMER)
-                    setTimeStr(lineBuf, displays[x].lines[0].ref);
+                    pos = setTimeStr(lineBuf, displays[x].lines[0].ref);
                 else
-                    setFloatStr(lineBuf, displays[x].lines[0]);
+                    pos = setFloatStr(lineBuf, displays[x].lines[0]);
 
                 if (displays[x].lines[1].type == PDT_TIMER)
-                    setTimeStr(lineBuf + 5, displays[x].lines[1].ref);
+                    pos = setTimeStr(pos, displays[x].lines[1].ref);
                 else
-                    setFloatStr(lineBuf + 5, displays[x].lines[1]);
+                    pos = setFloatStr(pos, displays[x].lines[1]);
 
-                sendStringBTPD(displays[x].address, lineBuf);
+                //Length can vary, so set null terminator so we can use strlen
+                *pos = 0;
+
+                sendStringBTPD(displays[x].address, lineBuf, strlen(lineBuf));
             }
 #endif
         }
@@ -240,12 +244,6 @@ float getFloat(DisplayLine& line)
     }
 }
 
-void sendStringBTPD(byte chan, const char *string) {
-    Wire.beginTransmission(chan);
-    Wire.write((uint8_t *)string, strlen(string));
-    Wire.endTransmission();
-}
-
 void sendFloatBTPD(byte chan, byte position, float line) {
     Wire.beginTransmission(chan);
     Wire.write(position);
@@ -264,6 +262,12 @@ void sendFloatsBTPD(byte chan, float line1, float line2) {
 }
 
 #ifdef BTPD_TIMERS
+void sendStringBTPD(byte chan, const char *string, int len) {
+    Wire.beginTransmission(chan);
+    Wire.write((uint8_t *)string, len);
+    Wire.endTransmission();
+}
+
 void convertTimeSegment(char* buf, byte val)
 {
     if (val > 99)
@@ -284,12 +288,19 @@ void convertTimeSegment(char* buf, byte val)
 }
 
 // Converts a line value to a string based on the types
-void setFloatStr(char* buf, DisplayLine& line)
+char* setFloatStr(char* buf, DisplayLine& line)
 {
     double d = (double)getFloat(line);
 
-    if (d < 0.0) memset(buf, '-', 5);
-    else sprintf_P(buf, PSTR("%5.1f"), d);
+    if (d < 0.0)
+    {
+        memset(buf, '-', 4);
+        return buf + 4;
+    }
+    else
+    {
+        return buf + sprintf_P(buf, PSTR("%5.1f"), d);
+    }
 }
 
 // The time string will be formatted in one of 3 ways
@@ -300,7 +311,7 @@ void setFloatStr(char* buf, DisplayLine& line)
 //
 // The maximum valu eofr each field is 99:59 Anything outside of this will result in an empty
 // timer value on the PID display
-void setTimeStr(char* buf, byte timer) {
+char* setTimeStr(char* buf, byte timer) {
     byte AA = 0;
     byte BB = 0;
 
@@ -326,6 +337,9 @@ void setTimeStr(char* buf, byte timer) {
     convertTimeSegment(buf, AA);
     *(buf+2) = ':';
     convertTimeSegment(buf+3, BB);
+
+    // Time string is always 5 bytes
+    return buf + 5;
 }
 
 #endif //BTPD_TIMERS
