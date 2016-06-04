@@ -170,8 +170,9 @@ extern PID pid[4];
 #endif
 
 //Timer Globals
-extern unsigned long timerValue[2], lastTime[2];
-extern boolean timerStatus[2], alarmStatus;
+#define NUM_TIMERS 2
+extern unsigned long timerValue[NUM_TIMERS], lastTime[NUM_TIMERS];
+extern boolean timerStatus[NUM_TIMERS], alarmStatus;
 
 //Log Globals
 extern boolean logData;
