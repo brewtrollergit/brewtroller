@@ -2,25 +2,18 @@
 #define TEMP_H
 
 #include <Arduino.h>
-#include "Temp.h"
 #include "HardwareProfile.h"
 
+#define TEMP_ADDR_SIZE  8     // Number of bytes in an address (i.e. 64 bit)
+
 void tempInit();
-
 void updateTemps();
-
-boolean tsReady();
-
-boolean validAddr(byte* addr);
-
 //This function search for an address that is not currently assigned!
-void getDSAddr(byte addrRet[8]);
+void getDSAddr(byte addrRet[TEMP_ADDR_SIZE]);
 
-//Returns Int representing hundreths of degree
-int read_temp(byte* addr);
-
-#if defined MASH_AVG
-void mashAvg();
-#endif
+// Returns the board temp as a whole degree or BAD_TEMP if there is an error or its not enabled
+int  getBoardTemp();
+// Returns an average board temp (sampled 10 times / minute)
+int  getAvgBoardTemp();
 
 #endif

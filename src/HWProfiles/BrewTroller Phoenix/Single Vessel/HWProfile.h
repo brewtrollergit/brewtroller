@@ -23,7 +23,7 @@ BrewTroller Phoenix Single Vessel Hardware Configuration
   #define MUX_ENABLE_PIN 2
   #define MUX_ENABLE_LOGIC 0
   
-  #define HLTHEAT_PIN 12
+  #define HLTHEAT_PIN 12  //Output Terminal 1
 
   #define DIGITAL_INPUTS
   #define DIGIN_COUNT 9
@@ -84,7 +84,7 @@ BrewTroller Phoenix Single Vessel Hardware Configuration
   //   11-bit (0.125C  / 0.225F ) = 375ms 
   //   10-bit (0.25C   / 0.45F  ) = 188ms 
   //    9-bit (0.5C    / 0.9F   ) =  94ms   
-  #define TS_ONEWIRE_RES 11
+  #define TS_ONEWIRE_RES 12
   
   // TS_ONEWIRE_FASTREAD: Enables faster reads of temperatures by reading only the first
   // 2 bytes of temperature data and ignoring CRC check.
@@ -95,6 +95,11 @@ BrewTroller Phoenix Single Vessel Hardware Configuration
   #define DS2482_ADDR 0x1B
   //**********************************************************************************
 
+  //  Enables lookup of the board temperature
+  #define TC74_BOARD_TEMP
+  #define TC74_I2C_ADDR 0x48
+  // Enable to track and monitor board temperature
+  #define MONITOR_BOARD_TEMP
 
   //**********************************************************************************
   // Serial0 Communication Options

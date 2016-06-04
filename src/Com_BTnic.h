@@ -578,13 +578,13 @@ void BTnic::execCmd(void) {
       
     case CMD_SET_TS:  //P
       {
-        byte addr[8];
-        for (byte i=0; i<8; i++) addr[i] = (byte)getCmdParamNum(i+1);
+        byte addr[TEMP_ADDR_SIZE];
+        for (byte i=0; i<TEMP_ADDR_SIZE; i++) addr[i] = (byte)getCmdParamNum(i+1);
         setTSAddr(cmdIndex, addr);
       }
     case CMD_GET_TS:  //F
       logFieldCmd(CMD_GET_TS, cmdIndex);
-      for (byte i=0; i<8; i++) logFieldI(tSensor[cmdIndex][i]);
+      for (byte i=0; i<TEMP_ADDR_SIZE; i++) logFieldI(tSensor[cmdIndex][i]);
       break;
       
       
@@ -622,9 +622,9 @@ void BTnic::execCmd(void) {
     case CMD_SCAN_TS:  //J
       {
         logFieldCmd(CMD_SCAN_TS, NO_CMDINDEX);
-        byte tsAddr[8];
+        byte tsAddr[TEMP_ADDR_SIZE];
         getDSAddr(tsAddr);
-        for (byte i=0; i<8; i++) logFieldI(tsAddr[i]);
+        for (byte i=0; i<TEMP_ADDR_SIZE; i++) logFieldI(tsAddr[i]);
       }
       break;
       
