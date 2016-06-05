@@ -238,7 +238,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
   }
 
   #if defined(MONITOR_BOARD_TEMP)
-    // Averages 25 samples over 2:00 mins
+    // Averages 24 samples over 2:00 mins
     #define BOARD_SAMPLE_SIZE 24
     #define BOARD_SAMPLE_DURATION 5000
     int      samples[BOARD_SAMPLE_SIZE];
@@ -262,6 +262,7 @@ Documentation, Forums and more information available at http://www.brewtroller.c
             boardTempSum += samples[samplePos++];
             avgBoardTemp = int(boardTempSum / BOARD_SAMPLE_SIZE);
             if (samplePos == BOARD_SAMPLE_SIZE) samplePos = 0;
+            lastBoardSample = millis();
         }
     }
     int getAvgBoardTemp() {
