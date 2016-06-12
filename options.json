@@ -5,7 +5,9 @@
 		"title": "Board Type",
 		"description": "Select the physical BrewTroller board type you have",
 		"options": [
-			{"optName":"BT_3X", "name": "3.X"},
+      {"optName":"BT_10_21", "name": "1.x-2.1" },
+      {"optName":"BT_22_24", "name": "2.2-2.4" },
+      {"optName":"BT_3X", "name": "3.X"},
 			{"optName":"BT_4P", "name": "4.X Pro"},
 			{"optName":"OT_BX1_HERMSI2CLCD", "name": "BX1 HERMS"},
 			{"optName":"OT_BX1_RIMSDFI2CLCD", "name": "BX1 RIMS"},
@@ -18,12 +20,12 @@
 			{"optName":"OT_EX1_HERMS", "name": "EX1 HERMS"},
 			{"optName":"OT_EX1_RIMSDF", "name": "EX1 RIMS"},
 			{"optName":"OT_EX1_SINGLEVESSEL", "name": "EX1 Single Vessel"},
-			{"optName":"OT_EX1_STEAMPWM", "name": "EX1 Steam"},
-                        {"optName":"BT_PHOENIX_HERMS","name": "Phoenix HERMS"},
-                        {"optName":"BT_PHOENIX_RIMS","name": "Phoenix RIMS"},
-                        {"optName":"BT_PHOENIX_SINGLEVESSEL","name": "Phoenix Single Vessel"},
-                        {"optName":"BT_PHOENIX_STEAMPWM","name": "Phoenix Steam"}
-                ],
+		  {"optName":"OT_EX1_STEAMPWM", "name": "EX1 Steam"},
+      {"optName":"BT_PHOENIX_HERMS","name": "Phoenix HERMS"},
+      {"optName":"BT_PHOENIX_RIMS","name": "Phoenix RIMS"},
+      {"optName":"BT_PHOENIX_SINGLEVESSEL","name": "Phoenix Single Vessel"},
+      {"optName":"BT_PHOENIX_STEAMPWM","name": "Phoenix Steam"}
+    ],
 		"default": "Phoenix HERMS"
 	},
 	{
@@ -46,13 +48,31 @@
 			{"name": "Single Vessel Mode", "optName": "SINGLE_VESSEL_SUPPORT", "on": false}
 		]
 	},
-	{
-		"type": "switch",
-		"id": "VOLUME_SENSORS",
-		"title": "Volume Sensing",
-		"description": "Disabling volume sensors changes the system display screens; Instead of displaying current volume levels target volumes for the step are shown",
-		"options": [
-			{"name": "Disable Volume Sensors", "optName":"VOLUME_MANUAL", "on": false}
-		]
-	}
+  {
+    "type": "switch",
+    "id": "VOLUME_SENSORS",
+    "title": "Volume Sensing",
+    "description": "Disabling volume sensors changes the system display screens; Instead of displaying current volume levels target volumes for the step are shown",
+    "options": [
+      {
+        "name": "Disable Volume Sensors",
+        "optName": "VOLUME_MANUAL",
+        "on": false
+      }
+    ]
+  },
+    {
+    "type": "switch",
+    "id": "HOME_SCREEN",
+    "title": "Custom Home Screen",
+    "description": "Configure what is displayed on the LCD home screen",
+    "options": [
+      {
+        "name": "Enable Custom Home Screen",
+        "optName": "CUSTOM_HOME_SCREEN",
+        "on":  true
+      }
+    ]
+  }
+
 ]

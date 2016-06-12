@@ -64,6 +64,8 @@ namespace UIStrings {
         extern const char COLON_SPACE[];
         extern const char PERC_SYM[];
         extern const char EMPTY[];
+        extern const char BTVER[];
+        extern const char DOT[];
     }
     
     namespace Shared {

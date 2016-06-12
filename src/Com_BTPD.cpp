@@ -161,7 +161,6 @@ PIDDisplay displays[BTPD_COUNT] = {
 
 void updateBTPD() {
     byte chan;
-    char *pos;
 
     if (millis() - lastBTPD > BTPD_INTERVAL) {
         for (int x = 0; x < BTPD_COUNT; ++x) {
@@ -183,6 +182,7 @@ void updateBTPD() {
             }
             else // Timer and something else
             {
+                char *pos;
                 if (displays[x].lines[0].type == PDT_TIMER)
                     pos = setTimeStr(lineBuf, displays[x].lines[0].ref);
                 else
