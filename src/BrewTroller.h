@@ -8,6 +8,7 @@
 #include <PID_Beta6.h>
 
 #include "HardwareProfile.h"
+#include "Temp.h"
 #include "PVOut.h"
 #include "UI_LCD.h"
 
@@ -79,8 +80,8 @@ extern pin hbPin;
 extern byte vSensor[3];
 
 //8-byte Temperature Sensor Address x9 Sensors
-extern byte tSensor[9][8];
-extern int temp[9];
+extern byte tSensor[NUM_TS][TEMP_ADDR_SIZE];
+extern int temp[NUM_TS];
 
 //Volume in (thousandths of gal/l)
 extern unsigned long tgtVol[3], volAvg[3], calibVols[3][10];
@@ -161,8 +162,9 @@ extern PID pid[4];
 #endif
 
 //Timer Globals
-extern unsigned long timerValue[2], lastTime[2];
-extern boolean timerStatus[2], alarmStatus;
+#define NUM_TIMERS 2
+extern unsigned long timerValue[NUM_TIMERS], lastTime[NUM_TIMERS];
+extern boolean timerStatus[NUM_TIMERS], alarmStatus;
 
 //Log Globals
 extern boolean logData;

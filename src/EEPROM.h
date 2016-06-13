@@ -21,7 +21,7 @@ void loadVlvModbus(byte board);
 //TSensors: HLT (0-7), MASH (8-15), KETTLE (16-23), H2OIN (24-31), H2OOUT (32-39),
 //          BEEROUT (40-47), AUX1 (48-55), AUX2 (56-63), AUX3 (64-71)
 //**********************************************************************************
-void setTSAddr(byte sensor, byte addr[8]);
+void setTSAddr(byte sensor, byte addr[TEMP_ADDR_SIZE]);
 
 //**********************************************************************************
 //PID Enabled (72); Bit 1 = HLT, Bit 2 = Mash, Bit 3 = Kettle, Bit 4 = Steam

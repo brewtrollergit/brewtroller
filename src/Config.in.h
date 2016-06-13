@@ -348,6 +348,11 @@ static const uint8_t TS = 1;
 // BTPD_INTERVAL: Specifies how often BTPD devices are updated in milliseconds
 #define BTPD_INTERVAL 500
 
+// BTPD_COUNT: Number of displays connected
+#define BTPD_COUNT 1
+
+//#define BTPD_TIMERS
+
 // Show temperature and volume per kettle on the same display.  Every other update
 // interval the display will switch from temperature to volume.  Make sure that the
 // values in Com_BTPD.h use the same address per kettle for both volume and temperature.
@@ -361,10 +366,14 @@ static const uint8_t TS = 1;
 //**********************************************************************************
 // UI: Home Screen Options
 //**********************************************************************************
-// LOGO_TROLL: Old Home screen with Troll icon
-// LOGO_BREWTROLLER: New Home Screen based on new BrewTroller logo
-//#define LOGO_TROLL
-#define LOGO_BREWTROLLER
+//#define TROLL_HOME_SCREEN  // Old Home screen with Troll icon
+#define BT_HOME_SCREEN     // New Home Screen based on new BrewTroller logo
+
+#ifdef CUSTOM_HOME_SCREEN
+const char CUSTOM_HOME_LINE1[14] PROGMEM = "Custom Line 1";
+const char CUSTOM_HOME_LINE2[15] PROGMEM = "Custom Line 2";
+const char CUSTOM_HOME_LINE3[15] PROGMEM = "Custom Line 3";
+#endif
 
 
 //**********************************************************************************

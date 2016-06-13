@@ -172,7 +172,7 @@ void loadSetup() {
 //TSensors: HLT (0-7), MASH (8-15), KETTLE (16-23), H2OIN (24-31), H2OOUT (32-39), 
 //          BEEROUT (40-47), AUX1 (48-55), AUX2 (56-63), AUX3 (64-71)
 //**********************************************************************************
-void setTSAddr(byte sensor, byte addr[8]) {
+void setTSAddr(byte sensor, byte addr[TEMP_ADDR_SIZE]) {
     #ifdef HLT_AS_KETTLE
     if (sensor == TS_HLT || sensor == TS_KETTLE) {
       //Also copy HLT setting to Kettle
@@ -666,23 +666,23 @@ boolean checkConfig() {
     case 0:
       //Supported PID cycle is changing from 1-255 to .1-25.5
       //All current PID cycle settings will be multiplied by 10 to represent tenths (s)
-      for (byte vessel = VS_HLT; vessel <= VS_STEAM; vessel++) EEPROM.write(76 + vessel * 5, EEPROM.read(76 + vessel * 5) * 10);
-      //Set cfgVersion = 1
-      EEPROM.write(2047, 1);
+      for (byte vessel = VS_HLT; vessel <= VS_STEAM; vessel++) {
+        EEPROM.write(76 + vessel * 5, EEPROM.read(76 + vessel * 5) * 10);
+      }
     case 1:
       //Set triggers to disabled by default
       for (byte trig = 0; trig < NUM_TRIGGERS; trig++) EEPROM.write(2050 + trig, 0);
-      EEPROM.write(2047, 2);
     case 2:
-      for (byte i = 0; i < NUM_MODBUS_BOARDS; i++)
+      for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) {
         setVlvModbusDefaults(i);
-      EEPROM.write(2047, 3);
-    case 3:
-      for (uint8_t i = 0; i < NUM_MODBUS_BOARDS; i++) {
-          setVlvModbusDefaults(i);
       }
-      EEPROM.write(2057, 4);
+    case 3:
+      break;
   }
+  if (cfgVersion <=3) {
+    EEPROM.write(2057, cfgVersion+1);
+  }
+
   return 0;
 }
 

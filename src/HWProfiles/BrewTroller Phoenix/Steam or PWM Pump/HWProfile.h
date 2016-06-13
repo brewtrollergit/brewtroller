@@ -43,8 +43,7 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
 
   #define RS485_SERIAL_PORT 1
   #define RS485_RTS_PIN    23
-  //#define PVOUT_TYPE_MODBUS
-  //#define NUM_MODBUS_BOARDS 1
+  #define PVOUT_TYPE_MODBUS
   
   #define HLTVOL_APIN 7
   #define MASHVOL_APIN 6
@@ -100,6 +99,11 @@ BrewTroller Phoenix Steam/PWM Pump Hardware Configuration
   #define DS2482_ADDR 0x1B
   //**********************************************************************************
 
+  //  Enables lookup of the board temperature
+  #define TC74_BOARD_TEMP
+  #define TC74_I2C_ADDR 0x48
+  // Enable to track and monitor board temperature
+  #define MONITOR_BOARD_TEMP
 
   //**********************************************************************************
   // Serial0 Communication Options
