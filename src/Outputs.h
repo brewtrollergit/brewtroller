@@ -38,6 +38,8 @@ void updateOutputs();
 void setOutputs(unsigned long vlvBits);
 
 void processAutoValve();
+
+unsigned long getValveBits();
 #endif //#ifdef PVOUT
 
 unsigned long computeValveBits();

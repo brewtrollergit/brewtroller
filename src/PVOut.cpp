@@ -28,6 +28,11 @@ unsigned long OutputBank::computeBits(unsigned long bits)
     return (bits >> m_bitPos) & m_mask;
 }
 
+unsigned long OutputBank::combineBits(unsigned long bits)
+{
+    return bits | (m_outputBits << m_bitPos);
+}
+
 // ---------------------- GPIOOutputBank ----------------------
 
 GPIOOutputBank::GPIOOutputBank() 

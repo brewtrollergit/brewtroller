@@ -765,6 +765,17 @@ void processHeatOutputs() {
       */
     }
   }
+
+  unsigned long getValveBits()
+  {
+      unsigned long bits = 0;
+      for (int x = 0; x < NUM_OUTPUT_BANKS; x++) {
+          if (outputBanks[x]) {
+              outputBanks[x]->combineBits(bits);
+          }
+      }
+      return bits;
+  }
 #endif //#ifdef PVOUT
   
 unsigned long computeValveBits() {

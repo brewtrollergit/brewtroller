@@ -18,6 +18,8 @@ public:
     virtual uint32_t get();
     
     byte             size() const;
+
+    unsigned long    combineBits(unsigned long bits);
  
 protected:
     unsigned long    computeBits(unsigned long);
