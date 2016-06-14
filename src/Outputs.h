@@ -33,9 +33,9 @@ void processHeatOutputsNonPIDEnabled(const byte vessel[]);
 void processHeatOutputs();
 
 #ifdef PVOUT
-void updateValves();
+void updateOutputs();
 
-void setValves(unsigned long vlvBits);
+void setOutputs(unsigned long vlvBits);
 
 void processAutoValve();
 #endif //#ifdef PVOUT

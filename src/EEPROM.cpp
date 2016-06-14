@@ -132,7 +132,6 @@ void loadSetup() {
   #endif
   
 
-
   //**********************************************************************************
   //401-480 Valve Profiles
   //**********************************************************************************
@@ -140,8 +139,18 @@ void loadSetup() {
     loadVlvConfigs();
   
     #ifdef PVOUT_TYPE_MODBUS
-      for (byte i = 0; i < NUM_MODBUS_BOARDS; i++)
-        loadVlvModbus(i);
+      byte bitPos = PVOUT_COUNT;
+      for (int x = 0; x < NUM_MODBUS_RELAY_BOARDS; x++)
+      {
+        byte addr = getVlvModbusAddr(x);
+        if (addr != MODBUS_RELAY_ADDRNONE) {
+          outputBanks[x+1] = new MODBUSOutputBank(bitPos, addr, getVlvModbusReg(x), getVlvModbusCoilCount(x), getVlvModbusOffset(x));
+        }
+        else {
+          outputBanks[x+1] = NULL;
+        }
+        bitPos += MODBUS_RELAY_DEFCOILCOUNT;
+      }
     #endif
   #endif
 }
@@ -150,18 +159,6 @@ void loadSetup() {
   void loadVlvConfigs() {
     eeprom_read_block(&vlvConfig, (unsigned char *) 401, 80);
   }
-  
-  #ifdef PVOUT_TYPE_MODBUS
-    void loadVlvModbus(byte board) {
-      if (ValvesMB[board]) {
-        delete ValvesMB[board];
-        ValvesMB[board] = NULL;
-      }
-      byte addr = getVlvModbusAddr(board);
-      if (addr != PVOUT_MODBUS_ADDRNONE)
-        ValvesMB[board] = new PVOutMODBUS(addr, getVlvModbusReg(board), getVlvModbusCoilCount(board), getVlvModbusOffset(board));
-    }
-  #endif 
 #endif
 
 //*****************************************************************************************************************************
@@ -633,9 +630,9 @@ void setVlvModbusOffset(byte board, byte offset) {
 }
 
 void setVlvModbusDefaults(byte board) {
-  setVlvModbusAddr(board, PVOUT_MODBUS_ADDRNONE);
-  setVlvModbusReg(board, PVOUT_MODBUS_DEFCOILREG);
-  setVlvModbusCoilCount(board, PVOUT_MODBUS_DEFCOILCOUNT);
+  setVlvModbusAddr(board, MODBUS_RELAY_ADDRNONE);
+  setVlvModbusReg(board, MODBUS_RELAY_DEFCOILREG);
+  setVlvModbusCoilCount(board, MODBUS_RELAY_DEFCOILCOUNT);
   byte defaultOffset = PVOUT_COUNT;
   if (board)
     for (byte i = 0; i < board; i++)
@@ -673,7 +670,7 @@ boolean checkConfig() {
       //Set triggers to disabled by default
       for (byte trig = 0; trig < NUM_TRIGGERS; trig++) EEPROM.write(2050 + trig, 0);
     case 2:
-      for (byte i = 0; i < PVOUT_MODBUS_MAXBOARDS; i++) {
+      for (byte i = 0; i < NUM_MODBUS_RELAY_BOARDS; i++) {
         setVlvModbusDefaults(i);
       }
     case 3:

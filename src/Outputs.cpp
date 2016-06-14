@@ -271,7 +271,7 @@ void pidInit() {
 
 void resetOutputs() {
   actProfiles = 0;
-  updateValves();
+  updateOutputs();
   for (byte i = VS_HLT; i <= LAST_HEAT_OUTPUT; i++)
     resetHeatOutput(i);
 }
@@ -659,21 +659,16 @@ void processHeatOutputs() {
 }
 
 #ifdef PVOUT
-  void updateValves() {
-    setValves(computeValveBits());
+  void updateOutputs() {
+    setOutputs(computeValveBits());
   }
   
-  void setValves(unsigned long vlvBits) {
-    if (vlvBits != Valves.get()) {
-      Valves.set(vlvBits);
-      //Mirror outputs to Modbus
-      #ifdef PVOUT_TYPE_MODBUS
-        if (ValvesMB[0])
-          ValvesMB[0]->set(vlvBits >> (ValvesMB[0]->offset()));
-        
-        if (ValvesMB[1])
-          ValvesMB[1]->set(vlvBits >> (ValvesMB[1]->offset()));
-      #endif
+  void setOutputs(unsigned long vlvBits) {
+    for (int x = 0; x < NUM_OUTPUT_BANKS; x++)
+    {
+      if (outputBanks[x]) {
+          outputBanks[x]->set(vlvBits);
+      }
     }
   }
 

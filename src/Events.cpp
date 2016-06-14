@@ -90,7 +90,7 @@ void eventHandler(byte eventID, int eventParam) {
       setAlarm(1);
       processHeatOutputs();
       #ifdef PVOUT
-        updateValves();
+        updateOutputs();
       #endif
       updateTimers();
     }
