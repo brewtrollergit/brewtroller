@@ -118,7 +118,7 @@ extern LCDI2C LCD;
 extern unsigned long vlvConfig[NUM_VLVCFGS], actProfiles;
 extern boolean autoValve[NUM_AV];
 
-#if !defined(NUM_MODBUS_RELAY_BOARDS) 
+#if !defined(NUM_MODBUS_RELAY_BOARDS)
   #define NUM_MODBUS_RELAY_BOARDS 0
 #endif
 #if NUM_MODBUS_RELAY_BOARDS == 0 && defined(PVOUT_TYPE_MODBUS)

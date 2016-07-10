@@ -35,7 +35,7 @@ uint32_t OutputBank::combineBits(uint32_t bits)
 
 // ---------------------- GPIOOutputBank ----------------------
 
-GPIOOutputBank::GPIOOutputBank() 
+GPIOOutputBank::GPIOOutputBank()
     : OutputBank(PVOUT_BUILTIN_COUNT, 0)
 {
     pinCount = PVOUT_COUNT;
@@ -95,8 +95,8 @@ void GPIOOutputBank::set(uint32_t outputBits) {
     outputBits = computeBits(outputBits);
     for (byte i = 0; i < pinCount; i++) {
         if (outputBits & (1<<i))
-            valvePin[i].set(); 
-        else 
+            valvePin[i].set();
+        else
             valvePin[i].clear();
     }
     m_outputBits = outputBits;
@@ -143,8 +143,8 @@ void MUXOutputBank::set(uint32_t outputBits) {
         clockPin.clear();
         //create bitmask to grab the bit associated with our counter i and set data pin accordingly (NOTE: 32 - i causes bits to be sent most significant to least significant)
         if (outputBits & ((uint32_t)1<<(31 - i)) )
-            dataPin.set(); 
-        else 
+            dataPin.set();
+        else
             dataPin.clear();
         //register shifts bits on upstroke of clock pin
         clockPin.set();
@@ -172,7 +172,7 @@ MODBUSOutputBank::MODBUSOutputBank(byte bitPos, uint8_t addr, unsigned int coilS
     slave.setupRTS(RS485_RTS_PIN);
 #endif
     slave.begin(RS485_BAUDRATE, RS485_PARITY);
-   
+
     //Modbus Coil Register index starts at 1 but is transmitted with a 0 index
     coilReg = coilStart - 1;
     outputCount = coilCount;

@@ -20,13 +20,13 @@ public:
     byte             size() const;
 
     uint32_t         combineBits(uint32_t bits);
- 
+
 protected:
     uint32_t         computeBits(uint32_t);
 
     uint32_t         m_outputBits;
     byte             m_size;
-    byte             m_bitPos;  
+    byte             m_bitPos;
     uint32_t         m_mask;
 };
 
