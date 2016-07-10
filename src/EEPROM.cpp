@@ -139,7 +139,7 @@ void loadSetup() {
     loadVlvConfigs();
   
     #ifdef PVOUT_TYPE_MODBUS
-      byte bitPos = PVOUT_COUNT;
+      byte bitPos = PVOUT_BUILTIN_COUNT;
       for (int x = 0; x < NUM_MODBUS_RELAY_BOARDS; x++)
       {
         byte addr = getVlvModbusAddr(x);
@@ -677,7 +677,7 @@ boolean checkConfig() {
       break;
   }
   if (cfgVersion <=3) {
-    EEPROM.write(2057, cfgVersion+1);
+    EEPROM.write(2047, 4);
   }
 
   return 0;

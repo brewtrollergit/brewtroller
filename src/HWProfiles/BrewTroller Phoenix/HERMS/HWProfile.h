@@ -9,13 +9,19 @@ BrewTroller Phoenix HERMS Hardware Configuration
 #ifndef BT_HWPROFILE
 #define BT_HWPROFILE
 
+  #include "Config.h"
+
   #define ENCODER_I2C
   #define ENCODER_I2CADDR 0x01
 
   #define ALARM_PIN 15 //OUT4
   
+  #define PVOUT
   #define PVOUT_TYPE_MUX
-  #define PVOUT_COUNT 16 //16 Outputs
+  #define PVOUT_TYPE_MODBUS
+  #define PVOUT_BUILTIN_COUNT 16 // # of onboard outputs
+
+  const uint8_t PVOUT_COUNT = PVOUT_BUILTIN_COUNT + (NUM_MODBUS_RELAY_BOARDS*MODBUS_RELAY_DEFCOILCOUNT);  // Total # of outputs - Outputs used for heat + Modbus relay outputs
 
   #define MUX_LATCH_PIN 3
   #define MUX_CLOCK_PIN 4
@@ -40,8 +46,7 @@ BrewTroller Phoenix HERMS Hardware Configuration
 
   #define RS485_SERIAL_PORT 1
   #define RS485_RTS_PIN    23
-  #define PVOUT_TYPE_MODBUS
-  
+
   #define HLTVOL_APIN 7
   #define MASHVOL_APIN 6
   #define KETTLEVOL_APIN 5

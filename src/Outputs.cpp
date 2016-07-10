@@ -766,12 +766,12 @@ void processHeatOutputs() {
     }
   }
 
-  unsigned long getValveBits()
+  uint32_t getValveBits()
   {
-      unsigned long bits = 0;
+      uint32_t bits = 0;
       for (int x = 0; x < NUM_OUTPUT_BANKS; x++) {
           if (outputBanks[x]) {
-              outputBanks[x]->combineBits(bits);
+              bits = outputBanks[x]->combineBits(bits);
           }
       }
       return bits;
@@ -799,12 +799,12 @@ unsigned long computeValveBits() {
   unsigned long offMask = 0;
   // Any bits set to 1 on onMask will force the corresponding valve on.
   unsigned long onMask = 0;
-  for (int i = 0; i < PVOUT_COUNT; i++) {
+  for (unsigned long i = 0; i < PVOUT_COUNT; i++) {
     if (softSwitchPv[i] == SOFTSWITCH_OFF) {
-      offMask |= (1 << i);
+      offMask |= (1UL << i);
     }
     else if (softSwitchPv[i] == SOFTSWITCH_ON) {
-      onMask |= (1 << i);
+      onMask |= (1UL << i);
     }
   }
   // Apply the masks to the pre-computed valve bits.
@@ -812,6 +812,7 @@ unsigned long computeValveBits() {
   vlvBits &= offMask;
   vlvBits |= onMask;
   #endif
+
   return vlvBits;
 }
 

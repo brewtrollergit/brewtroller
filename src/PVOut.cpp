@@ -18,17 +18,17 @@ byte OutputBank::size() const
     return m_size;
 }
 
-unsigned long OutputBank::get()
+uint32_t OutputBank::get()
 {
     return m_outputBits;
 }
 
-unsigned long OutputBank::computeBits(unsigned long bits)
+uint32_t OutputBank::computeBits(uint32_t bits)
 {
     return (bits >> m_bitPos) & m_mask;
 }
 
-unsigned long OutputBank::combineBits(unsigned long bits)
+uint32_t OutputBank::combineBits(uint32_t bits)
 {
     return bits | (m_outputBits << m_bitPos);
 }
@@ -36,7 +36,7 @@ unsigned long OutputBank::combineBits(unsigned long bits)
 // ---------------------- GPIOOutputBank ----------------------
 
 GPIOOutputBank::GPIOOutputBank() 
-    : OutputBank(PVOUT_COUNT, 0)
+    : OutputBank(PVOUT_BUILTIN_COUNT, 0)
 {
     pinCount = PVOUT_COUNT;
     valvePin = (pin *) malloc(pinCount * sizeof(pin));
@@ -105,7 +105,7 @@ void GPIOOutputBank::set(uint32_t outputBits) {
 // ---------------------- MUXOutputBank ----------------------
 
 MUXOutputBank::MUXOutputBank(byte latchPin, byte dataPin, byte clockPin, byte enablePin, boolean enableLogic)
-    : OutputBank(PVOUT_COUNT, 0)
+    : OutputBank(PVOUT_BUILTIN_COUNT, 0)
 {
     this->latchPin.setup(latchPin, OUTPUT);
     this->dataPin.setup(dataPin, OUTPUT);
@@ -185,6 +185,7 @@ void MODBUSOutputBank::init(void) {
 
 void MODBUSOutputBank::set(uint32_t outputBits) {
     outputBits = computeBits(outputBits);
+
     byte outputPos = 0;
     byte bytePos = 0;
     while (outputPos < outputCount) {

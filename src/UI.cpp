@@ -1215,7 +1215,6 @@ void editProgram(byte pgm) {
     menu progMenu(3, 12);
     
     while (1) {
-        Serial.println("EditProg call");
         progMenu.setItem_P(UIStrings::Program::ProgramMenu::BATCH_VOL, 0);
         vftoa(getProgBatchVol(pgm), buf, 1000, 1);
         truncFloat(buf, 5);
@@ -2814,7 +2813,7 @@ void cfgMODBUSOutputBoard(byte board) {
             }
             //Reload board
 
-            byte bitPos = PVOUT_COUNT;
+            byte bitPos = PVOUT_BUILTIN_COUNT;
             for (int x = 0; x < NUM_MODBUS_RELAY_BOARDS; x++)
             {
                 if (x == board)

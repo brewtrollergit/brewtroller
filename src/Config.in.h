@@ -500,7 +500,7 @@ const char CUSTOM_HOME_LINE3[15] PROGMEM = "Custom Line 3";
 #define MODBUS_RELAY_REGSLAVEADDR  9001
 #define MODBUS_RELAY_REGRESTART    9002
 
-//#define NUM_MODBUS_RELAY_BOARDS    1
+#define NUM_MODBUS_RELAY_BOARDS    0
 
 /***********************************************************************************
  * EXPERIMENTAL OPTIONS
