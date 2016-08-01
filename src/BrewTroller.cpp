@@ -176,23 +176,8 @@ LCDI2C LCD(UI_LCD_I2CADDR);
 unsigned long vlvConfig[NUM_VLVCFGS], actProfiles;
 boolean autoValve[NUM_AV];
 
-//Create the appropriate 'Valves' object for the hardware configuration (GPIO, MUX, MODBUS)
-#if defined PVOUT_TYPE_GPIO
-PVOutGPIO Valves(PVOUT_COUNT);
-
-#elif defined PVOUT_TYPE_MUX
-  PVOutMUX Valves( 
-    MUX_LATCH_PIN,
-    MUX_DATA_PIN,
-    MUX_CLOCK_PIN,
-    MUX_ENABLE_PIN,
-    MUX_ENABLE_LOGIC
-  );
-#endif
-
-#ifdef PVOUT_TYPE_MODBUS
-PVOutMODBUS *ValvesMB[PVOUT_MODBUS_MAXBOARDS];
-#endif
+//Output Banks
+OutputBank* outputBanks[NUM_OUTPUT_BANKS];
 
 //Shared buffers
 char buf[20];
@@ -218,20 +203,20 @@ unsigned long steamPressure;
 byte boilPwr;
 
 PID pid[4] = {
-        PID(&PIDInput[VS_HLT], &PIDOutput[VS_HLT], &setpoint[VS_HLT], 3, 4, 1),
+    PID(&PIDInput[VS_HLT], &PIDOutput[VS_HLT], &setpoint[VS_HLT], 3, 4, 1),
 
 #ifdef PID_FEED_FORWARD
     PID(&PIDInput[VS_MASH], &PIDOutput[VS_MASH], &setpoint[VS_MASH], &FFBias, 3, 4, 1),
-  #else
-        PID(&PIDInput[VS_MASH], &PIDOutput[VS_MASH], &setpoint[VS_MASH], 3, 4, 1),
+#else
+    PID(&PIDInput[VS_MASH], &PIDOutput[VS_MASH], &setpoint[VS_MASH], 3, 4, 1),
 #endif
 
-        PID(&PIDInput[VS_KETTLE], &PIDOutput[VS_KETTLE], &setpoint[VS_KETTLE], 3, 4, 1),
+    PID(&PIDInput[VS_KETTLE], &PIDOutput[VS_KETTLE], &setpoint[VS_KETTLE], 3, 4, 1),
 
 #ifdef PID_FLOW_CONTROL
     PID(&PIDInput[VS_PUMP], &PIDOutput[VS_PUMP], &setpoint[VS_PUMP], 3, 4, 1)
-  #else
-        PID(&PIDInput[VS_STEAM], &PIDOutput[VS_STEAM], &setpoint[VS_STEAM], 3, 4, 1)
+#else
+    PID(&PIDInput[VS_STEAM], &PIDOutput[VS_STEAM], &setpoint[VS_STEAM], 3, 4, 1)
 #endif
 };
 #if defined PID_FLOW_CONTROL && defined PID_CONTROL_MANUAL
@@ -281,8 +266,8 @@ unsigned int PIDOutputCountEquivalent[4][2] = {{0,0},{0,0},{0,0},{0,0}};
 void setup() {
 
 #ifdef ADC_REF
-	analogReference(ADC_REF);
-  #endif
+    analogReference(ADC_REF);
+#endif
 
 #ifdef USE_I2C
     Wire.begin(BT_I2C_ADDR);
@@ -290,63 +275,14 @@ void setup() {
 
     //Log initialization (Log.pde)
     comInit();
-
     //Pin initialization (Outputs.pde)
     pinInit();
 
-
-#ifdef PVOUT
-#if defined PVOUT_TYPE_GPIO
-#if PVOUT_COUNT >= 1
-    Valves.setup(0, VALVE1_PIN);
-#endif
-#if PVOUT_COUNT >= 2
-    Valves.setup(1, VALVE2_PIN);
-#endif
-#if PVOUT_COUNT >= 3
-    Valves.setup(2, VALVE3_PIN);
-#endif
-#if PVOUT_COUNT >= 4
-    Valves.setup(3, VALVE4_PIN);
-#endif
-#if PVOUT_COUNT >= 5
-    Valves.setup(4, VALVE5_PIN);
-#endif
-#if PVOUT_COUNT >= 6
-    Valves.setup(5, VALVE6_PIN);
-#endif
-#if PVOUT_COUNT >= 7
-    Valves.setup(6, VALVE7_PIN);
-#endif
-#if PVOUT_COUNT >= 8
-    Valves.setup(7, VALVE8_PIN);
-#endif
-#if PVOUT_COUNT >= 9
-    Valves.setup(8, VALVE9_PIN);
-#endif
-#if PVOUT_COUNT >= 10
-    Valves.setup(9, VALVEA_PIN);
-#endif
-#if PVOUT_COUNT >= 11
-      Valves.setup(10, VALVEB_PIN);
-    #endif
-#if PVOUT_COUNT >= 12
-      Valves.setup(11, VALVEC_PIN);
-    #endif
-#if PVOUT_COUNT >= 13
-      Valves.setup(12, VALVED_PIN);
-    #endif
-#if PVOUT_COUNT >= 14
-      Valves.setup(13, VALVEE_PIN);
-    #endif
-#if PVOUT_COUNT >= 15
-      Valves.setup(14, VALVEF_PIN);
-    #endif
-#if PVOUT_COUNT >= 16
-      Valves.setup(15, VALVEG_PIN);
-    #endif
-#endif
-    Valves.init();
+    // Default Output Bank
+#if defined(PVOUT_TYPE_GPIO)
+    outputBanks[0] = new GPIOOutputBank();
+#elif defined(PVOUT_TYPE_MUX)
+    outputBanks[0] = new MUXOutputBank(MUX_LATCH_PIN, MUX_DATA_PIN, MUX_CLOCK_PIN, MUX_ENABLE_PIN, MUX_ENABLE_LOGIC);
 #endif
 
     tempInit();
@@ -354,9 +290,15 @@ void setup() {
     //Check for cfgVersion variable and update EEPROM if necessary (EEPROM.pde)
     checkConfig();
 
-
     //Load global variable values stored in EEPROM (EEPROM.pde)
     loadSetup();
+
+    // Initialize output banks after MODBUS banks are created in loadSetup
+    for (int x = 0; x < NUM_OUTPUT_BANKS; x++) {
+        if (outputBanks[x]) {
+            outputBanks[x]->init();
+        }
+    }
 
 #ifdef DIGITAL_INPUTS
     //Digital Input Interrupt Setup

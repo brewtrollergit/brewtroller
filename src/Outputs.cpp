@@ -271,7 +271,7 @@ void pidInit() {
 
 void resetOutputs() {
   actProfiles = 0;
-  updateValves();
+  updateOutputs();
   for (byte i = VS_HLT; i <= LAST_HEAT_OUTPUT; i++)
     resetHeatOutput(i);
 }
@@ -659,21 +659,16 @@ void processHeatOutputs() {
 }
 
 #ifdef PVOUT
-  void updateValves() {
-    setValves(computeValveBits());
+  void updateOutputs() {
+    setOutputs(computeValveBits());
   }
   
-  void setValves(unsigned long vlvBits) {
-    if (vlvBits != Valves.get()) {
-      Valves.set(vlvBits);
-      //Mirror outputs to Modbus
-      #ifdef PVOUT_TYPE_MODBUS
-        if (ValvesMB[0])
-          ValvesMB[0]->set(vlvBits >> (ValvesMB[0]->offset()));
-        
-        if (ValvesMB[1])
-          ValvesMB[1]->set(vlvBits >> (ValvesMB[1]->offset()));
-      #endif
+  void setOutputs(unsigned long vlvBits) {
+    for (int x = 0; x < NUM_OUTPUT_BANKS; x++)
+    {
+      if (outputBanks[x]) {
+          outputBanks[x]->set(vlvBits);
+      }
     }
   }
 
@@ -770,6 +765,17 @@ void processHeatOutputs() {
       */
     }
   }
+
+  uint32_t getValveBits()
+  {
+      uint32_t bits = 0;
+      for (int x = 0; x < NUM_OUTPUT_BANKS; x++) {
+          if (outputBanks[x]) {
+              bits = outputBanks[x]->combineBits(bits);
+          }
+      }
+      return bits;
+  }
 #endif //#ifdef PVOUT
   
 unsigned long computeValveBits() {
@@ -793,12 +799,12 @@ unsigned long computeValveBits() {
   unsigned long offMask = 0;
   // Any bits set to 1 on onMask will force the corresponding valve on.
   unsigned long onMask = 0;
-  for (int i = 0; i < PVOUT_COUNT; i++) {
+  for (unsigned long i = 0; i < PVOUT_COUNT; i++) {
     if (softSwitchPv[i] == SOFTSWITCH_OFF) {
-      offMask |= (1 << i);
+      offMask |= (1UL << i);
     }
     else if (softSwitchPv[i] == SOFTSWITCH_ON) {
-      onMask |= (1 << i);
+      onMask |= (1UL << i);
     }
   }
   // Apply the masks to the pre-computed valve bits.
@@ -806,6 +812,7 @@ unsigned long computeValveBits() {
   vlvBits &= offMask;
   vlvBits |= onMask;
   #endif
+
   return vlvBits;
 }
 

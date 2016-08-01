@@ -487,18 +487,20 @@ const char CUSTOM_HOME_LINE3[15] PROGMEM = "Custom Line 3";
 //**********************************************************************************
 // RS485/Modbus Configuration
 //**********************************************************************************
-#define RS485_BAUDRATE    76800
-#define RS485_PARITY      SERIAL_8E1
 
-#define PVOUT_MODBUS_MAXBOARDS     4
-#define PVOUT_MODBUS_DEFCOILREG    1000
-#define PVOUT_MODBUS_DEFCOILCOUNT  8
-#define PVOUT_MODBUS_BASEADDR      10
-#define PVOUT_MODBUS_ADDRNONE 255
-#define PVOUT_MODBUS_ADDRINIT 247
-#define PVOUT_MODBUS_REGIDMODE 9000
-#define PVOUT_MODBUS_REGSLAVEADDR 9001
-#define PVOUT_MODBUS_REGRESTART 9002
+#define RS485_BAUDRATE             76800
+#define RS485_PARITY               SERIAL_8E1
+
+#define MODBUS_RELAY_DEFCOILREG    1000
+#define MODBUS_RELAY_DEFCOILCOUNT  8
+#define MODBUS_RELAY_BASEADDR      10
+#define MODBUS_RELAY_ADDRNONE      255
+#define MODBUS_RELAY_ADDRINIT      247
+#define MODBUS_RELAY_REGIDMODE     9000
+#define MODBUS_RELAY_REGSLAVEADDR  9001
+#define MODBUS_RELAY_REGRESTART    9002
+
+#define NUM_MODBUS_RELAY_BOARDS    0
 
 /***********************************************************************************
  * EXPERIMENTAL OPTIONS

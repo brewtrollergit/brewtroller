@@ -1,73 +1,87 @@
-#ifndef PVOUT_H
-  #define PVOUT_H
-  #include <pin.h>
-  #include "Config.h"
-  #include "HardwareProfile.h"
-  #include <ModbusMaster.h>
-  #include <HardwareSerial.h>
-  
-  class PVOutGPIO
-  {
-    private:
-    pin* valvePin;
-    unsigned long vlvBits;
-    byte pinCount;
-    
-    public:
-    PVOutGPIO(byte count);
+#ifndef OUTPUT_BANK_H
+#define OUTPUT_BANK_H
 
-    ~PVOutGPIO();
+#include <pin.h>
+#include "Config.h"
+#include "HardwareProfile.h"
+#include <ModbusMaster.h>
+#include <HardwareSerial.h>
   
-    void setup(byte pinIndex, byte digitalPin);
+class OutputBank
+{
+public:
+    OutputBank(byte size, byte bitPos);
+    virtual ~OutputBank() = default;
+
+    virtual void     init(void) = 0;
+    virtual void     set(uint32_t outBits) = 0;
+    virtual uint32_t get();
+    
+    byte             size() const;
+
+    uint32_t         combineBits(uint32_t bits);
+
+protected:
+    uint32_t         computeBits(uint32_t);
+
+    uint32_t         m_outputBits;
+    byte             m_size;
+    byte             m_bitPos;
+    uint32_t         m_mask;
+};
+
+class GPIOOutputBank : public OutputBank
+{
+public:
+    GPIOOutputBank();
+    ~GPIOOutputBank();
+
+    void     setup(byte pinIndex, byte digitalPin);
+    void     init(void);
+    void     set(uint32_t outputBits);
+
+private:
+    pin*     valvePin;
+    byte     pinCount;
+};
   
-    void init(void);
-    
-    void set(unsigned long vlvBits);
-    
-    unsigned long get();
-  };
-  
-  class PVOutMUX
-  {
-    private:
-    pin muxLatchPin, muxDataPin, muxClockPin, muxEnablePin;
-    boolean muxEnableLogic;
-    unsigned long vlvBits;
-    
-    public:
-    PVOutMUX(byte latchPin, byte dataPin, byte clockPin, byte enablePin, boolean enableLogic);
-    
-    void init(void);
-    
-    void set(unsigned long vlvBits);
-    
-    unsigned long get();
-  };
+class MUXOutputBank : public OutputBank
+{
+public:
+    MUXOutputBank(byte latchPin, byte dataPin, byte clockPin, byte enablePin, boolean enableLogic);
+
+    void     init(void);
+    void     set(uint32_t outputBits);
+
+private:
+    pin      latchPin;
+    pin      dataPin;
+    pin      clockPin;
+    pin      enablePin;
+    boolean  enableLogic;
+};
 
 #ifdef PVOUT_TYPE_MODBUS
-  class PVOutMODBUS
-  {
-    private:
-    unsigned long outputsState;
-    ModbusMaster slave;
-    byte slaveAddr, outputCount, bitOffset;
-    unsigned int coilReg;
+class MODBUSOutputBank : public OutputBank
+{
+public:
+    MODBUSOutputBank(byte bitPos, uint8_t addr, unsigned int coilStart, uint8_t coilCount, uint8_t offset);
 
-    public:
-    PVOutMODBUS(uint8_t addr, unsigned int coilStart, uint8_t coilCount, uint8_t offset);
-    
-    void init(void);
-    
-    void set(unsigned long vlvBits);
-    
-    unsigned long get();
-    byte count();
-    unsigned long offset();
-    byte detect();
-    byte setAddr(byte newAddr);
-    byte setIDMode(byte value);
-    byte getIDMode();
-  };
+    void         init(void);
+    void         set(uint32_t outputBits);
+    uint32_t     offset();
+    byte         detect();
+    byte         setAddr(byte newAddr);
+    byte         setIDMode(byte value);
+    byte         getIDMode();
+
+private:
+    ModbusMaster slave;
+    byte         slaveAddr;
+    byte         outputCount;
+    byte         bitOffset;
+    uint32_t     coilReg;
+};
 #endif
 
-#endif //ifndef PVOUT_H
+#endif //ifndef OUTPUT_BANK_H

@@ -115,7 +115,7 @@ void brewCore() {
       processAutoValve();
       
       //Set Valve Outputs based on active valve profiles (if changed): Outputs.pde
-      updateValves();
+      updateOutputs();
       break;
 #endif 
   }

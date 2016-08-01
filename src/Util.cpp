@@ -60,3 +60,9 @@ unsigned long pow10(byte power) {
   for (byte i = 0; i < power; i++) retValue *= 10;
   return retValue;
 }
+
+unsigned long pow2(byte power) {
+    unsigned long retValue = 1;
+    for (byte i = 0; i < power; i++) retValue *= 2;
+    return retValue;
+}
