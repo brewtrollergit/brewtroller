@@ -215,6 +215,11 @@ byte MODBUSOutputBank::setAddr(byte newAddr) {
     }
     return result;
 }
+
+byte MODBUSOutputBank::getAddr() {
+    return slaveAddr;
+}
+
 byte MODBUSOutputBank::setIDMode(byte value) {
     return slave.writeSingleRegister(MODBUS_RELAY_REGIDMODE, value);
 }

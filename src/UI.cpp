@@ -643,12 +643,12 @@ void screenRefresh() {
         truncFloat(buf, 5);
         LCD.lPad(2, 15, buf, 5, ' ');
         
-        if (PIDEnabled[TS_KETTLE]) {
-            byte pct = PIDOutput[TS_KETTLE] / PIDCycle[TS_KETTLE];
+        if (PIDEnabled[VS_KETTLE]) {
+            byte pct = PIDOutput[VS_KETTLE] / PIDCycle[VS_KETTLE];
             if (pct == 0) strcpy_P(buf, UIStrings::Generic::OFF);
             else if (pct == 100) concatPSTRS(buf, UIStrings::Generic::SPACE, UIStrings::Generic::ON);
             else { itoa(pct, buf, 10); strcat(buf, "%"); }
-        } else if (heatStatus[TS_KETTLE]) {
+        } else if (heatStatus[VS_KETTLE]) {
             concatPSTRS(buf, UIStrings::Generic::SPACE, UIStrings::Generic::ON);
         } else {
             strcpy_P(buf, UIStrings::Generic::OFF);
@@ -2742,11 +2742,14 @@ void cfgMODBUSOutputs() {
             if (!outputBanks[i+1])
                 boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::DISABLED, i);
             else {
-                byte result = ((MODBUSOutputBank*)outputBanks[i+1])->detect();
-                if (result == ku8MBSuccess) 
+                MODBUSOutputBank* modbus = (MODBUSOutputBank*)outputBanks[i + 1];
+                byte result = modbus->detect();
+                if (result == ku8MBSuccess) {
                     boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::CONNECTED, i);
-                else if (result == ku8MBResponseTimedOut)
+                }
+                else if (result == ku8MBResponseTimedOut) {
                     boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::TIMEOUT, i);
+                }
                 else {
                     boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::ERROR, i);
                     boardMenu.appendItem(itoa(result, buf, 16), i);
@@ -2770,6 +2773,12 @@ void cfgMODBUSOutputBoard(byte board) {
             boardMenu.appendItem(itoa(addr, buf, 10), 0);
         else
             boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::NA, 0);
+
+        MODBUSOutputBank* modbus = (MODBUSOutputBank*)outputBanks[board + 1];
+        if (!modbus)
+        {
+            modbus = new MODBUSOutputBank(PVOUT_BUILTIN_COUNT+(board*MODBUS_RELAY_DEFCOILCOUNT), MODBUS_RELAY_ADDRINIT, getVlvModbusReg(board), getVlvModbusCoilCount(board), getVlvModbusOffset(board));
+        }
         
         boardMenu.setItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::REGISTER, 1);
         boardMenu.appendItem(itoa(getVlvModbusReg(board), buf, 10), 1);
@@ -2786,8 +2795,9 @@ void cfgMODBUSOutputBoard(byte board) {
             boardMenu.appendItem_P(((MODBUSOutputBank*)outputBanks[board + 1])->getIDMode() ? UIStrings::Generic::ON : UIStrings::Generic::OFF, 5);
         }
         
-        if (addr != MODBUS_RELAY_ADDRNONE)
+        if (addr != MODBUS_RELAY_ADDRNONE) {
             boardMenu.setItem_P(UIStrings::Shared::DELETE, 6);
+        }
         
         boardMenu.setItem_P(UIStrings::Generic::EXIT, 255);
         
@@ -2796,7 +2806,11 @@ void cfgMODBUSOutputBoard(byte board) {
         byte lastOption = scrollMenu(title, &boardMenu);
         if (lastOption == 0) {
             byte addr = getVlvModbusAddr(board);
-            setVlvModbusAddr(board, getValue_P(UIStrings::SystemSetup::MODBUSOutputConfig::RELAY_ADDRESS, addr == MODBUS_RELAY_ADDRNONE ? MODBUS_RELAY_BASEADDR + board : addr, 1, 255, UIStrings::Generic::EMPTY));
+            unsigned long val = getValue_P(UIStrings::SystemSetup::MODBUSOutputConfig::RELAY_ADDRESS, addr == MODBUS_RELAY_ADDRNONE ? MODBUS_RELAY_BASEADDR + board : addr, 1, 255, UIStrings::Generic::EMPTY);
+            if (modbus->setAddr(val) == 0)
+            {
+                setVlvModbusAddr(board, val);
+            }
         } else if (lastOption == 1)
             setVlvModbusReg(board, getValue_P(UIStrings::SystemSetup::MODBUSOutputConfig::COIL_REGISTER, getVlvModbusReg(board), 1, 65536, UIStrings::Generic::EMPTY));
         else if (lastOption == 2)
@@ -2806,7 +2820,7 @@ void cfgMODBUSOutputBoard(byte board) {
         else if (lastOption == 4)
             cfgMODBUSOutputAssign(board);
         else if (lastOption == 5)
-            ((MODBUSOutputBank*)outputBanks[board + 1])->setIDMode((((MODBUSOutputBank*)outputBanks[board + 1])->getIDMode()) ^ 1);
+            modbus->setIDMode(modbus->getIDMode() ^ 1);
         else {
             if (lastOption == 6) {
                 setVlvModbusDefaults(board);
@@ -2819,11 +2833,13 @@ void cfgMODBUSOutputBoard(byte board) {
                 if (x == board)
                 {
                     byte addr = getVlvModbusAddr(x);
-                    if (addr != MODBUS_RELAY_ADDRNONE) {
-                        outputBanks[x + 1] = new MODBUSOutputBank(bitPos, addr, getVlvModbusReg(x), getVlvModbusCoilCount(x), getVlvModbusOffset(x));
-                    }
-                    else {
+                    if (outputBanks[x + 1])
+                    {
+                        delete outputBanks[x + 1];
                         outputBanks[x + 1] = NULL;
+                    }
+                    if (addr != MODBUS_RELAY_ADDRNONE) {
+                        outputBanks[x+1] = new MODBUSOutputBank(bitPos, addr, getVlvModbusReg(x), getVlvModbusCoilCount(x), getVlvModbusOffset(x));
                     }
                     break;
                 }
@@ -2836,7 +2852,7 @@ void cfgMODBUSOutputBoard(byte board) {
 
 void cfgMODBUSOutputAssign(byte board) {
     MODBUSOutputBank tempMB(0, MODBUS_RELAY_ADDRINIT, getVlvModbusReg(board), getVlvModbusCoilCount(board), getVlvModbusOffset(board));
-    
+
     byte result = 1;
     while ((result = tempMB.detect())) {
         LCD.clear();
