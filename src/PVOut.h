@@ -72,6 +72,7 @@ public:
     uint32_t     offset();
     byte         detect();
     byte         setAddr(byte newAddr);
+    byte         getAddr();
     byte         setIDMode(byte value);
     byte         getIDMode();
 
