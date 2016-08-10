@@ -2754,6 +2754,8 @@ void cfgMODBUSOutputs() {
                     boardMenu.appendItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::ERROR, i);
                     boardMenu.appendItem(itoa(result, buf, 16), i);
                 }
+                // Wait for bus to clear before addressing the next relay board
+                deley(10);
             }
         }
         boardMenu.setItem_P(UIStrings::Generic::EXIT, 255);
@@ -2792,7 +2794,7 @@ void cfgMODBUSOutputBoard(byte board) {
         
         if (outputBanks[board+1]) {
             boardMenu.setItem_P(UIStrings::SystemSetup::MODBUSOutputConfig::ID_MODE, 5);
-            boardMenu.appendItem_P(((MODBUSOutputBank*)outputBanks[board + 1])->getIDMode() ? UIStrings::Generic::ON : UIStrings::Generic::OFF, 5);
+            boardMenu.appendItem_P(modbus->getIDMode() ? UIStrings::Generic::ON : UIStrings::Generic::OFF, 5);
         }
         
         if (addr != MODBUS_RELAY_ADDRNONE) {
