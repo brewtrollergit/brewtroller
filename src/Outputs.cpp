@@ -667,7 +667,11 @@ void processHeatOutputs() {
     for (int x = 0; x < NUM_OUTPUT_BANKS; x++)
     {
       if (outputBanks[x]) {
-          outputBanks[x]->set(vlvBits);
+        outputBanks[x]->set(vlvBits);
+        // Wait for bus to clear before addressing  additional MODBUS relay boards
+        if (x > 1) {
+          delay(10);
+        }
       }
     }
   }
