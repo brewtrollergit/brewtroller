@@ -2755,7 +2755,7 @@ void cfgMODBUSOutputs() {
                     boardMenu.appendItem(itoa(result, buf, 16), i);
                 }
                 // Wait for bus to clear before addressing the next relay board
-                deley(10);
+                delay(10);
             }
         }
         boardMenu.setItem_P(UIStrings::Generic::EXIT, 255);
