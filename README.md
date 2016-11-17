@@ -31,7 +31,7 @@ Windows users can download cmake [here](http://www.cmake.org/download/), and pre
   ```
   $ sudo apt-get install avr-libc binutils-avr gcc-avr cmake avrdude
   ```
-For Ubuntu on Windows you will need to install and use [WinAVR](http://www.ladyada.net/learn/avr/setup-win.html) for the avrdude step below becauee USB isn't support yet.
+For Ubuntu on Windows you will need to install and use [WinAVR](http://www.ladyada.net/learn/avr/setup-win.html) for the avrdude step below because USB isn't support yet.
   
 ## Download and Prepare for Build
   ```
@@ -100,4 +100,4 @@ Phoenix now uses a buad rate of 115200 but older boards may require 57600
 You must substitute [you brewtroller serial port] for the serial port your board is connected to. This will vary by OS, windows users will have form `COMxx`,
 Mac users will have the form `/dev/tty.usbserial-xxxxxxx` and linux users will have the form `/dev/ttyUSBxx`.
 
-For Ubuntu on Windows you will need to install and use [WinAVR](http://www.ladyada.net/learn/avr/setup-win.html) for the avrdude step below becauee USB isn't support yet.
+For Ubuntu on Windows you will need to install and use [WinAVR](http://www.ladyada.net/learn/avr/setup-win.html) for the avrdude step below because USB isn't support yet.
